@@ -6,7 +6,8 @@
   "description": "",
   "main": "experiment.js",
   "dependencies": {
-    "stimsrv": "file:../stimsrv"
+    "stimsrv": "file:../stimsrv",
+    "another-dimension": "file:../another-dimension"
   },
   "devDependencies": {
     "nodemon": "2.0.7"
