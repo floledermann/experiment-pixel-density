@@ -16,11 +16,12 @@ use cases:
 - Kindle PDF Output
 */
 
-const snellen = require("stimsrv/src/task/snellen.js");
-const centerline = require("stimsrv/src/task/centerline.js");
-const bangbox = require("stimsrv/src/task/bangbox.js");
-const tao = require("stimsrv/src/task/aucklandoptotypes.js");
-const pause = require("stimsrv/src/task/pause.js");
+const snellen = require("stimsrv/src/tasks/snellen.js");
+const bangbox = require("stimsrv/src/tasks/bangbox.js");
+const tao = require("stimsrv/src/tasks/aucklandoptotypes.js");
+const pause = require("stimsrv/src/tasks/pause.js");
+
+const centerline = require("./src/tasks/centerline.js");
 
 const filestorage = require("stimsrv/src/storage/filestorage.js");
 
@@ -148,27 +149,6 @@ module.exports = {
         //maxValue:
       })
     }),
-    tao({
-      vanishing: true,
-      size: //sequence(["5mm","3mm","1mm"]), 
-        staircase({
-          startValue: "5mm",
-          stepSize: 1.2,
-          stepType: "multiply",
-          minReversals: 5,
-          minTrials: 2
-          //minValue: 
-          //maxValue:
-        })
-    }),
-  /*
-    pause({
-      buttondisplay: "control",
-      displaymessage: "Waiting for the experiment to start...",
-      monitormessage: "Press Start or hit any key to start the experiment.",
-      buttonlabel: "Start"
-    }),*/
-    /*
     centerline({
       centerLine: random.pick([true,false]),
       angle: random.range(0,360, {round: 1}),
@@ -182,15 +162,32 @@ module.exports = {
         //minValue: 
         //maxValue:
       })
-    }),*/
-    
+    }),
+    tao({
+      vanishing: true,
+      size: staircase({
+        startValue: "5mm",
+        stepSize: 1.2,
+        stepType: "multiply",
+        minReversals: 0,
+        minTrials: 2
+        //minValue: 
+        //maxValue:
+      })
+    }),
+  /*
+    pause({
+      buttondisplay: "control",
+      displaymessage: "Waiting for the experiment to start...",
+      monitormessage: "Press Start or hit any key to start the experiment.",
+      buttonlabel: "Start"
+    }),*/   
     pause({
       buttondisplay: "control",
       displaymessage: "The experiment was completed successfully.\nThank you for your participation!",
       monitormessage: "Experiment ended.",
       buttonlabel: "Restart"
     })
-    
   ]
   
 }
