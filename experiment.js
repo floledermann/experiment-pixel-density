@@ -112,7 +112,7 @@ module.exports = {
     format: "json"
   }),
    
-  experiments: [
+  tasks: [
     snellen({
       //rotate: random([-2,+2]), // add random rotation to prevent aliasing
       pixelAlign: false,
