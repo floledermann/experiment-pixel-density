@@ -123,14 +123,12 @@ module.exports = {
       backgroundIntensity: 1,
       //size: "3px",
       size: //sequence(["5mm","3mm","1mm"]), 
-      staircase({
-        startValue: "5mm",
-        stepSize: 1.2,
-        stepType: "multiply",
-        minReversals: 0, //5,
-        minTrials: 2
-        //minValue: 
-        //maxValue:
+        staircase({
+          startValue: "5mm",
+          stepSize: 1.2,
+          stepType: "multiply", 
+          minReversals: 0, //5,
+          minTrials: 2
       })
     }),
     centerline({
@@ -143,8 +141,6 @@ module.exports = {
         stepType: "multiply",
         minReversals: 0, //5,
         minTrials: 2
-        //minValue: 
-        //maxValue:
       })
     }),
     tao({
@@ -155,8 +151,6 @@ module.exports = {
         stepType: "multiply",
         minReversals: 0,
         minTrials: 2
-        //minValue: 
-        //maxValue:
       })
     }),
   /*
