@@ -10,7 +10,8 @@ const staircase = require("stimsrv/src/controller/staircase.js");
 const random = require("stimsrv/src/controller/random.js");
 const sequence = require("stimsrv/src/controller/sequence.js");
 
-const centerline = require("./src/tasks/centerline.js");
+const centerline = require("./src/tasks/centerline.js");   
+const dashedline = require("./src/tasks/dashedline.js");   
 
 
 // this is a complete configuration
@@ -117,6 +118,18 @@ module.exports = {
   }),
    
   tasks: [
+    dashedline({
+      dashPattern: random.pick([[100,0],[1,1],[3,1],[3,1,1,1]]),
+      angle: random.range(0,360, {round: 1}),
+      length: "50mm",
+      width:
+        staircase({
+          startValue: "1.5mm",
+          stepSize: 1.2,
+          stepType: "multiply", 
+          minReversals: 5,
+          minTrials: 2
+      })    }),
     snellen({
       //rotate: random([-2,+2]), // add random rotation to prevent aliasing
       pixelAlign: false,
