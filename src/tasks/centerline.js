@@ -14,10 +14,10 @@ function renderCenterline(ctx, condition) {
     size: 10,
     length: 100,
     centerLine: true,
-    fillGapIfNoLine: true, // fill gap with 1/3 intensity if no center line is present
-    fillColor: "rgb(155, 155, 155)",  // 1/3 intensity at 2.2 gamma
+    fillGapIfNoLine: true, // fill gap if no center line is present
+    fillIntensity: "rgb(128,128,128)",
     pixelAlign: true
-    // foregroundColor/backgroundColor are handled by caller!
+    // foregroundIntensity/backgroundIntensity are handled by caller!
   }, condition);
   
 /*
@@ -63,7 +63,7 @@ X ... Origin
     ctx.lineTo(l2,3*s/10);
     ctx.lineTo(-l2,3*s/10);
     ctx.closePath();
-    ctx.fillStyle = condition.fillColor;
+    ctx.fillStyle = condition.fillIntensity;
     ctx.fill();
     ctx.restore();
   }
@@ -104,20 +104,22 @@ module.exports = function(parameters, options) {
     size: "5mm",
     length: "30mm",
     centerLine: true,
-    fillGapIfNoLine: true, // fill gap with 1/3 intensity if no center line is present
-    fillColor: "rgb(127, 127, 127)",  // gaussian blur on actual image, also midpoint @ 1.0gamma
-    //fillColor: "rgb(127, 127, 127)",  // gaussian blur on actual image, also midpoint @ 1.0gamma
-    //fillColor: "rgb(85, 85, 85)",  // 1/3 intensity at 1.0 gamma
-    //fillColor: "rgb(155, 155, 155)",  // 1/3 intensity at 2.2 gamma
-    //fillColor: "rgb(212, 212, 212)", // 2/3 @ 2.2gamma
-    //fillColor: "rgb(202, 202, 202)", // 3/5 @ 2.2gamma
-    //fillColor: "rgb(168, 168, 168)", // 2/5 @ 2.2gamma
-    pixelAlign: true,
-    foregroundIntensityHigh: true
+    fillGapIfNoLine: true, // fill gap if no center line is present
+    backgroundIntensity: 1.0,
+    foregroundIntensity: 0.0,
+    fillIntensity: 0.5,
+    //fillIntensity: "rgb(127, 127, 127)",  // gaussian blur on actual image, also midpoint @ 1.0gamma
+    //fillIntensity: "rgb(85, 85, 85)",  // 1/3 intensity at 1.0 gamma
+    //fillIntensity: "rgb(155, 155, 155)",  // 1/3 intensity at 2.2 gamma
+    //fillIntensity: "rgb(212, 212, 212)", // 2/3 @ 2.2gamma
+    //fillIntensity: "rgb(202, 202, 202)", // 3/5 @ 2.2gamma
+    //fillIntensity: "rgb(168, 168, 168)", // 2/5 @ 2.2gamma
+    pixelAlign: true
   }, parameters);
 
   options = Object.assign({
-    dimensions: ["size","length"]
+    dimensions: ["size","length"],
+    intensities: ["fillIntensity"]
   }, options);
   
   let buttonParameters = {size: "25arcmin", angle: 0, length: "75arcmin"};
