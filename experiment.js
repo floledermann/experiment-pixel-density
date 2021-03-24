@@ -17,6 +17,10 @@ const centerline = require("./src/tasks/centerline.js");
 module.exports = {
   
   name: "Simple Test Experiment",
+  
+  settings: {
+    loop: true
+  },
     
   devices: [
     {
@@ -28,7 +32,7 @@ module.exports = {
           id: "left",
           description: "Left external monitor",
           resolution: "hd",
-          pixeldensity: 86,
+          pixeldensity: 91,
           viewingdistance: 600,
           gamma: 2.2,
           minintensity: 1/40
@@ -36,7 +40,7 @@ module.exports = {
           id: "right",
           description: "Right external monitor",
           resolution: "hd",
-          pixeldensity: 86,
+          pixeldensity: 91,
           viewingdistance: 600,
           gamma: 2.2,
           minintensity: 1/40
@@ -116,13 +120,13 @@ module.exports = {
     snellen({
       //rotate: random([-2,+2]), // add random rotation to prevent aliasing
       pixelAlign: false,
-      lowIntensity: 0, //sequence.loop([0,0.25,0.5,0.75,0.9,0.95]),
+      //lowIntensity: 0, //sequence.loop([0,0.25,0.5,0.75,0.9,0.95]),
       //highIntensity: 1.0,
       //contrastRatio: 1.05,
       foregroundIntensity: 0,
       backgroundIntensity: 1,
       //size: "3px",
-      size: //sequence(["5mm","3mm","1mm"]), 
+      size:
         staircase({
           startValue: "5mm",
           stepSize: 1.2,
@@ -134,7 +138,6 @@ module.exports = {
     centerline({
       centerLine: random.pick([true,false]),
       angle: random.range(0,360, {round: 1}),
-      foregroundIntensityHigh: false,
       size: staircase({
         startValue: "2mm",
         stepSize: 1.2,
@@ -164,7 +167,7 @@ module.exports = {
       buttondisplay: "control",
       displaymessage: "The experiment was completed successfully.\nThank you for your participation!",
       monitormessage: "Experiment ended.",
-      buttonlabel: "Restart"
+      buttonlabel: "Store Results & Restart"
     })
   ]
   
