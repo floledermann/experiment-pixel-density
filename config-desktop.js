@@ -1,3 +1,5 @@
+const filestorage = require("stimsrv/src/storage/filestorage.js");
+
 module.exports = {
   devices: [
     {
@@ -55,36 +57,42 @@ module.exports = {
   
   roles: [
     {
-      device: "main",
       role: "supervisor",
+      device: "main",
       interfaces: ["monitor", "control"],
       description: "Supervisor screen and experiment control"
     },
     {
+      role: "experiment",
       device: "main",
       screen: "left",
-      role: "experiment",
       interfaces: ["display","response"],
       description: "Experiment screen for stimulus display and participant response"
     },
     {
+      role: "experiment-debug",
       device: "main",
       screen: "left",
-      role: "experiment-debug",
       interfaces: ["display","response","debug"],
       description: "Experiment screen with debugging output"
     },
     {
-      device: "pixel2",
       role: "experiment",
+      device: "pixel2",
       interfaces: ["display","response"],
       description: "Experiment screen for stimulus display and participant response"
     },
     {
-      device: "xperia",
       role: "experiment-display",
+      device: "xperia",
       interfaces: ["display"],
       description: "Experiment screen for stimulus display."
     },
-  ] 
+  ],
+  
+  storage: filestorage({
+    destination: "./data",
+    format: "json"
+  })
+
 }

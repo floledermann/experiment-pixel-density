@@ -4,8 +4,6 @@ const bangbox = require("stimsrv/src/tasks/bangbox.js");
 const tao = require("stimsrv/src/tasks/aucklandoptotypes.js");
 const pause = require("stimsrv/src/tasks/pause.js");
 
-const filestorage = require("stimsrv/src/storage/filestorage.js");
-
 const staircase = require("stimsrv/src/controller/staircase.js");
 const random = require("stimsrv/src/controller/random.js");
 const sequence = require("stimsrv/src/controller/sequence.js");
@@ -26,12 +24,8 @@ module.exports = {
   },
     
   devices: desktop.devices,
-  roles: desktop.roles,
-  
-  storage: filestorage({
-    destination: "./data",
-    format: "json"
-  }),
+  roles: desktop.roles, 
+  storage: desktop.storage,
    
   tasks: [
     dashedline({
