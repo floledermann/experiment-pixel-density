@@ -15,9 +15,9 @@ const centerline = require("./src/tasks/centerline.js");
 const dashedline = require("./src/tasks/dashedline.js");  
 
 const desktop = require("./config-desktop.js");
+const messages = require("./messages.js");
 
 
-// this is a complete configuration
 module.exports = {
   
   name: "Loop Test",
@@ -33,11 +33,7 @@ module.exports = {
   tasks: [
     pause({
       message: {
-        main: `Welcome to this experiment.
-
-Please adjust the chair so that your chin rests on the rail in front of you, using the lever on the right hand side underneath the chair.
-
-Press "Continue" when you are ready.`,
+        main: messages.greeting,
         display: "Please start the experiment at station 1.",
         monitor: "Waiting for user to start..."
       },
