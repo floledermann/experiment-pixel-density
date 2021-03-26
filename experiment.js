@@ -140,6 +140,7 @@ module.exports = {
       parameters: {
         angle: random.range(0,360, {round: 1}),
         length: "50mm",
+        gapIntensity: 0.8,
         width:
           staircase({
             startValue: "1.5mm",

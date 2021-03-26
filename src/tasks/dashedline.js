@@ -15,7 +15,6 @@ function renderDashedLine(ctx, condition) {
     width: 10,
     length: 100,
     dashpattern: 3   // dash length, 1 unit = line width. single value or [dash,gap,dash,gap] array.
-    // foregroundIntensity/backgroundIntensity are handled by caller!
   }, condition);
   
   if (!Array.isArray(condition.dashpattern)) {
@@ -33,6 +32,19 @@ function renderDashedLine(ctx, condition) {
   let l2 = l/2;
     
   ctx.rotate(condition.angle / 180 * Math.PI);
+  
+  if (condition.gapIntensity) {
+    ctx.save();
+    ctx.fillStyle = condition.gapIntensity;
+    ctx.beginPath();
+    ctx.moveTo(-l2,-w2);
+    ctx.lineTo(l2,-w2);
+    ctx.lineTo(l2,w2);
+    ctx.lineTo(-l2,w2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
   
   let dashPos = -l2;
   let dashIndex = 0;
@@ -108,7 +120,7 @@ module.exports = function(config) {
   
   let canvasOptions = {
     dimensions: ["width","length"],
-    intensities: ["fillIntensity"]
+    intensities: ["gapIntensity"]
   };
   
   let buttonParameters = {width: "7arcmin", angle: 0, length: "75arcmin" };
