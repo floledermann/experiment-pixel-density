@@ -144,12 +144,13 @@ module.exports = function(config) {
 
 
 /*
+"ChoiceTask" Factory parameters:
 
 name
 description
 stimulusRenderer
 defaultParameters
-buttonParameterOverrides
+buttonParameters
 defaultChoices
 dimensions: ["width","length"],
 intensities: ["gapIntensity"]
@@ -158,4 +159,13 @@ intensities: ["gapIntensity"]
 verifyChoice: f()
 controller
 interfaces
+
+-- overrides (in experiment file / factory call)
+id
+description
+parameters
+conditions (choices?)
+buttonParameters
+verifyChoice
+interaces? / roles?
 */
