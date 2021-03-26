@@ -10,6 +10,7 @@ const sequence = require("stimsrv/src/controller/sequence.js");
 
 const centerline = require("./src/tasks/centerline.js");   
 const dashedline = require("./src/tasks/dashedline.js");  
+const text = require("./src/tasks/text.js");  
 
 const desktop = require("./config-desktop.js");
 
@@ -28,6 +29,27 @@ module.exports = {
   storage: desktop.storage,
    
   tasks: [
+    text({
+      conditions: [
+        {
+          text: "ABC"
+        },
+        {
+          text: "DEF"
+        }
+      ],
+      parameters: {
+        angle: random.range(-90,90, {round: 1}),
+        fontSize:
+          staircase({
+            startValue: "3mm",
+            stepSize: 1.1,
+            stepType: "multiply", 
+            minReversals: 5,
+            minTrials: 2
+        })
+      }
+    }),
     dashedline({
       conditions: [
         {
@@ -50,7 +72,6 @@ module.exports = {
       parameters: {
         angle: random.range(0,360, {round: 1}),
         length: "50mm",
-        gapIntensity: 0.8,
         width:
           staircase({
             startValue: "1.5mm",
