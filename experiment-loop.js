@@ -41,7 +41,7 @@ module.exports = {
     }),
     loop({
       context: {
-        targetDevice: sequence(["desktop","mobile-1","mobile-2"])
+        displayDevice: sequence(["desktop","mobile-1","mobile-2"])
       },
       tasks: [
         pause({
