@@ -3,6 +3,7 @@ const Dimension = require("another-dimension");
 
 const htmlButtons = require("stimsrv/src/ui/htmlButtons.js");
 const parameterController = require("stimsrv/src/controller/parameterController.js");
+const random = require("stimsrv/src/controller/random.js");
 
 const canvasRenderer = require("stimsrv/src/stimuli/canvas/canvasRenderer.js");
 
@@ -13,17 +14,17 @@ function renderDashedLine(ctx, condition) {
     angle: 0,
     width: 10,
     length: 100,
-    dashPattern: 3   // dash length, 1 unit = line width. single value or [dash,gap,dash,gap] array.
-    // foregroundColor/backgroundColor are handled by caller!
+    dashpattern: 3   // dash length, 1 unit = line width. single value or [dash,gap,dash,gap] array.
+    // foregroundIntensity/backgroundIntensity are handled by caller!
   }, condition);
   
-  if (!Array.isArray(condition.dashPattern)) {
-    condition.dashPattern = [condition.dashPattern];
+  if (!Array.isArray(condition.dashpattern)) {
+    condition.dashpattern = [condition.dashpattern];
   }
   
   // double last entry if uneven number of entries
-  if (condition.dashPattern.length % 2 == 1) {
-    condition.dashPattern.push(condition.dashPattern[condition.dashPattern.length-1]);
+  if (condition.dashpattern.length % 2 == 1) {
+    condition.dashpattern.push(condition.dashpattern[condition.dashpattern.length-1]);
   }
   
   let w = condition.width;
@@ -38,7 +39,7 @@ function renderDashedLine(ctx, condition) {
   
   while (dashPos < l2) {
     
-    let dashLength = condition.dashPattern[dashIndex] * condition.width;
+    let dashLength = condition.dashpattern[dashIndex] * condition.width;
     
     if (dashPos + dashLength > l2) {
       dashLength = l2 - dashPos;
@@ -52,50 +53,78 @@ function renderDashedLine(ctx, condition) {
     ctx.closePath();
     ctx.fill();
     
-    dashPos += (condition.dashPattern[dashIndex] + condition.dashPattern[dashIndex+1]) * condition.width;
+    dashPos += (condition.dashpattern[dashIndex] + condition.dashpattern[dashIndex+1]) * condition.width;
     
     dashIndex += 2;
-    if (dashIndex >= condition.dashPattern.length) {
+    if (dashIndex >= condition.dashpattern.length) {
       dashIndex = 0;
     }
   }
  
 }}
 
-module.exports = function(parameters, options) {
+module.exports = function(config) {
   
-  parameters = Object.assign({
+  config.parameters = Object.assign({
     angle: 0,
     width: "3mm",
     length: "30mm",
     backgroundIntensity: 1.0,
     foregroundIntensity: 0.0
-  }, parameters);
-
-  options = Object.assign({
+  }, config.parameters);
+  
+  config.conditions = config.conditions || [
+    {
+      dashpattern: [100,0],
+      label: "Solid"
+    },
+    {
+      dashpattern: [3,3],
+      label: "Dashed"
+    }
+  ];
+  
+  // add default values explicitly to conditions in order to have each condition fully specified
+  let conditionKeys = new Set();
+  for (let cond of config.conditions) {
+    Object.keys(cond).forEach(k => conditionKeys.add(k));
+  }
+  for (let cond of config.conditions) {
+    for (let key of conditionKeys) {
+      if (!cond.hasOwnProperty(key)) {
+        if (!(typeof config.parameters[key] == "function")) {
+          cond[key] = config.parameters[key];
+        }
+        else {
+          throw new Error("Condition parameter '" + key + "' is not specified for all conditions, but is dynamic - specify this parameter for all conditions!"); 
+        }
+      }
+    }
+  }
+  
+  config.options = Object.assign({
+    selectCondition: random.pick
+  }, config.options);
+  
+  let canvasOptions = {
     dimensions: ["width","length"],
     intensities: ["fillIntensity"]
-  }, options);
+  };
   
-  let buttonParameters = {width: "7arcmin", angle: 0, length: "75arcmin"};
-  let buttonCanvas = htmlButtons.buttonCanvas(renderDashedLine, buttonParameters, options);
+  let buttonParameters = {width: "7arcmin", angle: 0, length: "75arcmin" };
+  let buttonCanvas = htmlButtons.buttonCanvas(renderDashedLine, buttonParameters, canvasOptions);
 
-  let renderer = canvasRenderer(renderDashedLine, options);
+  let renderer = canvasRenderer(renderDashedLine, canvasOptions);
   
   return {
     name: "dashed_line",
     description: "Dashed line", 
     interfaces: {
       display: renderer,
-      response: htmlButtons([
-        {label: "Solid", canvas: buttonCanvas, response: {dashPattern: [100,0]}},
-        {label: "Dotted", canvas: buttonCanvas, response: {dashPattern: [1,1]}},
-        {label: "Dashed", canvas: buttonCanvas, response: {dashPattern: [3,1]}},
-        {label: "Dot‑dash", canvas: buttonCanvas, response: {dashPattern: [3,1,1,1]}}
-      ]),
+      response: htmlButtons(config.conditions.map(c => ({label: c.label, canvas: buttonCanvas, response: c}))),
       monitor: renderer,
       control: null,
     },
-    controller: parameterController(parameters, options)
+    controller: parameterController(config.parameters, config.options.selectCondition(config.conditions))
   }
 }
