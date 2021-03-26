@@ -140,3 +140,22 @@ module.exports = function(config) {
     controller: parameterController(config.parameters, config.options.selectCondition(config.conditions))
   }
 }
+
+
+
+/*
+
+name
+description
+stimulusRenderer
+defaultParameters
+buttonParameterOverrides
+defaultChoices
+dimensions: ["width","length"],
+intensities: ["gapIntensity"]
+
+-- optional
+verifyChoice: f()
+controller
+interfaces
+*/
