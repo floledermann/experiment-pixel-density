@@ -91,7 +91,9 @@ module.exports = function(config) {
     description: "Text", 
     interfaces: {
       display: renderer,
-      response: htmlButtons(config.conditions.map(c => ({label: c.text, response: c}))),
+      // apply letter-spacing on button to avoid hint by text length
+      // unfortunately CSS applies letter-spacing after the last letter, so we need this hack
+      response: htmlButtons(config.conditions.map(c => ({label: x => ('<span style="letter-spacing: 0.7em; margin-right: -0.7em;">' + x.text + '</span>'), response: c }))),
       monitor: renderer,
       control: null,
     },
