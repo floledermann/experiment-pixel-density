@@ -28,7 +28,29 @@ function renderText(ctx, condition) {
   
   let c = condition;
   ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px/${c.lineHeight} ${c.fontStretch} ${c.fontFamily} `
-    
+  
+  if (condition.outline && condition.outlineWidth > 0) {
+    console.log(condition.outlineWidth * condition.fontSize);
+    console.log(condition.outlineIntensity);
+    ctx.save();
+    ctx.strokeStyle = condition.outlineIntensity;
+    ctx.lineWidth = condition.outlineWidth * condition.fontSize;
+    ctx.lineJoin = "round";
+    ctx.strokeText(c.text, 0, 0);
+    ctx.restore();
+  }
+  
+  if (condition.outline2 && condition.outline2Width > 0) {
+    console.log(condition.outline2Width * condition.fontSize);
+    console.log(condition.outline2Intensity);
+    ctx.save();
+    ctx.strokeStyle = condition.outline2Intensity;
+    ctx.lineWidth = condition.outline2Width * condition.fontSize;
+    ctx.lineJoin = "round";
+    ctx.strokeText(c.text, 0, 0);
+    ctx.restore();
+  }
+  
   ctx.fillText(c.text, 0, 0);
  
 }}
@@ -45,6 +67,12 @@ module.exports = function(config) {
     fontStretch: "normal",
     fontFamily: "Helvetica,Arial,sans-serif",
     angle: 0,
+    outline: false,
+    outlineWidth: 0.25, // relative to fontSize
+    outlineIntensity: 0.5,
+    outline2: false,
+    outline2Width: 0.02, // relative to fontSize
+    outline2Intensity: 0.0,
     backgroundIntensity: 1.0,
     foregroundIntensity: 0.0
   }, config.parameters);
@@ -81,7 +109,8 @@ module.exports = function(config) {
   }, config.options);
   
   let canvasOptions = {
-    dimensions: ["fontSize"]
+    dimensions: ["fontSize"],
+    intensities: ["outlineIntensity","outline2Intensity"]
   };
   
   let renderer = canvasRenderer(renderText, canvasOptions);
