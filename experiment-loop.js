@@ -29,6 +29,10 @@ module.exports = {
   devices: desktop.devices,
   roles: desktop.roles,
   storage: desktop.storage,
+  
+  context: {
+    pixeldensity: 96
+  },
    
   tasks: [
     pause({
@@ -49,7 +53,7 @@ module.exports = {
           displaymessage: context => "Please continue the experiment at station " + (context.loopCounter + 1),
           monitormessage: "Transition to next device...",
           buttonlabel: "Continue"
-        }),
+        }),/*
         snellen({
           size:
             staircase({
@@ -69,7 +73,7 @@ module.exports = {
             minReversals: 0,
             minTrials: 2
           })
-        })
+        })*/
       ],
     }),
     pause({
