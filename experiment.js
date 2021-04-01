@@ -40,6 +40,11 @@ module.exports = {
       ],
       parameters: {
         angle: random.range(-90,90, {round: 1}),
+        outline: true,
+        outline2: true,
+        backgroundIntensity: 0.5,
+        outlineIntensity: 1,
+        outlineWidth: 0.25,
         fontSize:
           staircase({
             startValue: "3mm",
