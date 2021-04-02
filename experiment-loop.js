@@ -58,7 +58,7 @@ module.exports = {
     loop({
       context: {
         displayDevice: sequence(["desktop","mobile-1","mobile-2"]),
-        loopCounter: count()
+        loopCounter: 0 //count()
       },
       tasks: [
         pause({
@@ -66,6 +66,13 @@ module.exports = {
           message: {
             display: context => "Please continue the experiment at station " + (context?.loopCounter + 1),
             monitor: "Transition to next device..."
+          },
+          button: "Continue"
+        }),
+        pause({
+          //buttondisplay: context => context.device,
+          message: {
+            display: "The experiment continues"
           },
           button: "Continue"
         }),/*
