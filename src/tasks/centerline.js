@@ -129,7 +129,7 @@ module.exports = function(parameters, options) {
   
   return {
     name: "centerline",
-    description: "Cased line with (optional) centerline", 
+    description: "Cased line with (optional) centerline",
     interfaces: {
       display: renderer,
       response: htmlButtons([
