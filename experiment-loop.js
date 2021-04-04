@@ -49,7 +49,7 @@ module.exports = {
   tasks: [
     pause({
       message: {
-        display: context => "1\n" + context.message + "\n" + context.message2
+        display: context => "Root\n" + context.message + "\n" + context.message2
       }
     }),
     loop({
@@ -67,6 +67,28 @@ module.exports = {
           message: {
             display: context => "2.1\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
           }
+        }),
+        snellen({
+          foregroundIntensity: 0,
+          backgroundIntensity: 1,
+          size:
+            staircase({
+              startValue: "5mm",
+              stepSize: 1.2,
+              stepType: "multiply", 
+              minReversals: 0,
+              minTrials: 2
+            })
+        }),
+        tao({
+          vanishing: true,
+          size: staircase({
+            startValue: "5mm",
+            stepSize: 1.2,
+            stepType: "multiply",
+            minReversals: 0,
+            minTrials: 2
+          })
         }),
         pause({
           message: {
