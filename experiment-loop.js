@@ -18,13 +18,13 @@ const dashedline = require("./src/tasks/dashedline.js");
 const desktop = require("./config-desktop.js");
 const messages = require("./messages.js");
 
-
 module.exports = {
   
   name: "Loop Test",
   
   settings: {
-    loop: true
+    loop: true,
+    clientTimestamps: false
   },
     
   devices: desktop.devices,
@@ -34,7 +34,7 @@ module.exports = {
   context: {
     //pixeldensity: 96, this should be passed in form device info
     message: "Hi!",
-    message2: sequence(["Hi!", "Bye!"])
+    //message2: sequence(["Hi!", "Bye!"])
   },
   
   context2: sequence([
@@ -49,53 +49,54 @@ module.exports = {
   tasks: [
     pause({
       message: {
-        main: context => context.message + messages.greeting,
-        display: context => context.message + " Please start the experiment at station 1.",
-        monitor: "Waiting for user to start..."
-      },
-      button: "Continue"
+        display: context => "1\n" + context.message + "\n" + context.message2
+      }
     }),
     loop({
+      loop: context => {
+        context.loopCounter++;
+        console.log("Checking outer loop counter " + context.loopCounter);
+        return context.loopCounter < 2;
+      },
       context: {
         displayDevice: sequence(["desktop","mobile-1","mobile-2"]),
         loopCounter: 0 //count()
       },
       tasks: [
         pause({
-          //buttondisplay: context => context.device,
           message: {
-            display: context => "Please continue the experiment at station " + (context?.loopCounter + 1),
-            monitor: "Transition to next device..."
-          },
-          button: "Continue"
+            display: context => "2.1\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
+          }
         }),
         pause({
-          //buttondisplay: context => context.device,
           message: {
-            display: "The experiment continues"
-          },
-          button: "Continue"
-        }),/*
-        snellen({
-          size:
-            staircase({
-              startValue: "5mm",
-              stepSize: 1.2,
-              stepType: "multiply", 
-              minReversals: 0,
-              minTrials: 2
-          })
+            display: context => "2.2\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
+          }
         }),
-        tao({
-          vanishing: true,
-          size: staircase({
-            startValue: "5mm",
-            stepSize: 1.2,
-            stepType: "multiply",
-            minReversals: 0,
-            minTrials: 2
-          })
-        })*/
+        loop({
+          loop: context => {
+            context.loopCounter++;
+            console.log("Checking inner loop counter " + context.loopCounter);
+            return context.loopCounter < 7;
+          },
+          context: {
+            loopCounter: 5, //count()
+            message2: "Inner loop says hi!",
+            message: "Bye!"
+          },
+          tasks: [
+            pause({
+              message: {
+                display: context => "2.3.1\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
+              }
+            }),
+            pause({
+              message: {
+                display: context => "2.3.2\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
+              }
+            })
+          ],
+        }),
       ],
     }),
     pause({
@@ -103,8 +104,8 @@ module.exports = {
         display: "Thank you for your participation!",
         monitor: "Experiment ended."
       },
-      button: "Store & Restart",
-      buttondisplay: "control"
+      button: "Restart",
+      //buttondisplay: "control"
     }),
   ]
 }
