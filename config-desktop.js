@@ -7,7 +7,8 @@ module.exports = {
       id: "main",
       ip: ".",
       platform: "browser", // browser-old, browser-nojs, pdf, png
-      screens: [{
+      screens: [
+        {
           id: "left",
           description: "Left external monitor",
           resolution: "hd",
@@ -15,7 +16,8 @@ module.exports = {
           viewingdistance: 600,
           gamma: 2.2,
           minintensity: 1/40
-        },{
+        },
+        {
           id: "right",
           description: "Right external monitor",
           resolution: "hd",
@@ -23,7 +25,8 @@ module.exports = {
           viewingdistance: 600,
           gamma: 2.2,
           minintensity: 1/40
-        },{
+        },
+        {
           id: "main",
           description: "Laptop internal monitor",
           resolution: "hd",
@@ -31,7 +34,8 @@ module.exports = {
           viewingdistance: 500,
           gamma: 2.2,
           minintensity: 1/40
-      }],
+        }
+      ],
       mouse: true,
       keyboard: true
     },
