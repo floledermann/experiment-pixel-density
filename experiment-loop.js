@@ -53,21 +53,21 @@ module.exports = {
       }
     }),
     loop({
+      initialContext: {
+        displayDevice: sequence(["desktop","mobile-1","mobile-2"]),
+        loopCounter: 0 //count()
+      },
       loop: context => {
         context.loopCounter++;
         console.log("Checking outer loop counter " + context.loopCounter);
         return context.loopCounter < 2;
-      },
-      context: {
-        displayDevice: sequence(["desktop","mobile-1","mobile-2"]),
-        loopCounter: 0 //count()
       },
       tasks: [
         pause({
           message: {
             display: context => "2.1\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
           }
-        }),
+        }),/*
         snellen({
           foregroundIntensity: 0,
           backgroundIntensity: 1,
@@ -89,22 +89,22 @@ module.exports = {
             minReversals: 0,
             minTrials: 2
           })
-        }),
+        }),*/
         pause({
           message: {
             display: context => "2.2\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
           }
         }),
         loop({
+           initialContext: {
+            loopCounter: 5, //count()
+            message2: "Inner loop says hi!",
+            message: "Bye!"
+          },
           loop: context => {
             context.loopCounter++;
             console.log("Checking inner loop counter " + context.loopCounter);
             return context.loopCounter < 7;
-          },
-          context: {
-            loopCounter: 5, //count()
-            message2: "Inner loop says hi!",
-            message: "Bye!"
           },
           tasks: [
             pause({
