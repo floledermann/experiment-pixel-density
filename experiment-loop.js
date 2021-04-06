@@ -1,22 +1,10 @@
 
-const snellen = require("stimsrv/src/tasks/snellen.js");
-const bangbox = require("stimsrv/src/tasks/bangbox.js");
-const tao = require("stimsrv/src/tasks/aucklandoptotypes.js");
 const pause = require("stimsrv/src/tasks/pause.js");
 const loop = require("stimsrv/src/tasks/loop.js");   
 
-const filestorage = require("stimsrv/src/storage/filestorage.js");
-
-const staircase = require("stimsrv/src/controller/staircase.js");
-const random = require("stimsrv/src/controller/random.js");
 const sequence = require("stimsrv/src/controller/sequence.js");
-const count = require("stimsrv/src/controller/count.js");   
-
-const centerline = require("./src/tasks/centerline.js");   
-const dashedline = require("./src/tasks/dashedline.js");  
 
 const desktop = require("./config-desktop.js");
-const messages = require("./messages.js");
 
 module.exports = {
   
@@ -32,20 +20,10 @@ module.exports = {
   storage: desktop.storage,
   
   context: {
-    //pixeldensity: 96, this should be passed in form device info
-    message: "Hi!",
-    //message2: sequence(["Hi!", "Bye!"])
+    //pixeldensity: 96, this should be passed in from device info
+    message: sequence.loop(["Hi!", "Bye!"])
   },
   
-  context2: sequence([
-  {
-    message: "Hi"
-  },
-  {
-    message: "Bye"
-  }
-  ]),
-   
   tasks: [
     pause({
       message: {
@@ -90,11 +68,12 @@ module.exports = {
             minTrials: 2
           })
         }),*/
+        /*
         pause({
           message: {
             display: context => "2.2\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
           }
-        }),
+        }),*/
         loop({
            initialContext: {
             loopCounter: 5, //count()
@@ -108,6 +87,7 @@ module.exports = {
           },
           tasks: [
             pause({
+              store: true,
               message: {
                 display: context => "2.3.1\n" + context.loopCounter + "\n" + context.message + "\n" + context.message2
               }
