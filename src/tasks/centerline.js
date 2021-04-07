@@ -130,14 +130,18 @@ module.exports = function(parameters, options) {
   return {
     name: "centerline",
     description: "Cased line with (optional) centerline",
-    interfaces: {
-      display: renderer,
-      response: htmlButtons([
-        {label: "Centerline", canvas: buttonCanvas, response: {centerLine: true}},
-        {label: "No&nbsp;Centerline", canvas: buttonCanvas, response: {centerLine: false}}
-      ]),
-      monitor: renderer,
-      control: null,
+    ui: function(context) {
+      return {
+        interfaces: {
+          display: renderer,
+          response: htmlButtons([
+            {label: "Centerline", canvas: buttonCanvas, response: {centerLine: true}},
+            {label: "No&nbsp;Centerline", canvas: buttonCanvas, response: {centerLine: false}}
+          ]),
+          monitor: renderer,
+          control: null,
+        }
+      }
     },
     controller: parameterController(parameters)
   }

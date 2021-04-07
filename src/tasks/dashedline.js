@@ -131,11 +131,15 @@ module.exports = function(config) {
   return {
     name: "dashed_line",
     description: "Dashed line", 
-    interfaces: {
-      display: renderer,
-      response: htmlButtons(config.conditions.map(c => ({label: c.label, canvas: buttonCanvas, response: c}))),
-      monitor: renderer,
-      control: null,
+    ui: function(context) {
+      return {
+        interfaces: {
+          display: renderer,
+          response: htmlButtons(config.conditions.map(c => ({label: c.label, canvas: buttonCanvas, response: c}))),
+          monitor: renderer,
+          control: null
+        }
+      }
     },
     controller: parameterController(config.parameters, config.options.selectCondition(config.conditions))
   }

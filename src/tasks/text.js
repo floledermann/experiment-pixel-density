@@ -30,8 +30,8 @@ function renderText(ctx, condition) {
   ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px/${c.lineHeight} ${c.fontStretch} ${c.fontFamily} `
   
   if (condition.outline && condition.outlineWidth > 0) {
-    console.log(condition.outlineWidth * condition.fontSize);
-    console.log(condition.outlineIntensity);
+    //console.log(condition.outlineWidth * condition.fontSize);
+    //console.log(condition.outlineIntensity);
     ctx.save();
     ctx.strokeStyle = condition.outlineIntensity;
     ctx.lineWidth = condition.outlineWidth * condition.fontSize;
@@ -41,8 +41,8 @@ function renderText(ctx, condition) {
   }
   
   if (condition.outline2 && condition.outline2Width > 0) {
-    console.log(condition.outline2Width * condition.fontSize);
-    console.log(condition.outline2Intensity);
+    //console.log(condition.outline2Width * condition.fontSize);
+    //console.log(condition.outline2Intensity);
     ctx.save();
     ctx.strokeStyle = condition.outline2Intensity;
     ctx.lineWidth = condition.outline2Width * condition.fontSize;
@@ -118,13 +118,17 @@ module.exports = function(config) {
   return {
     name: "text",
     description: "Text", 
-    interfaces: {
-      display: renderer,
-      // apply letter-spacing on button to avoid hint by text length
-      // unfortunately CSS applies letter-spacing after the last letter, so we need this hack
-      response: htmlButtons(config.conditions.map(c => ({label: x => ('<span style="letter-spacing: 0.7em; margin-right: -0.7em;">' + x.text + '</span>'), response: c }))),
-      monitor: renderer,
-      control: null,
+    ui: function(context) {
+      return {
+        interfaces: {
+          display: renderer,
+          // apply letter-spacing on button to avoid hint by text length
+          // unfortunately CSS applies letter-spacing after the last letter, so we need this hack
+          response: htmlButtons(config.conditions.map(c => ({label: x => ('<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + x.text + '</span>'), response: c }))),
+          monitor: renderer,
+          control: null,
+        }
+      }
     },
     controller: parameterController(config.parameters, config.options.selectCondition(config.conditions))
   }
