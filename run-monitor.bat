@@ -1,4 +1,4 @@
 
-call npx nodemon --watch experiment-loop.js --watch package.json --watch src --watch ../stimsrv/src --exec "npx" stimsrv experiment-loop.js
+call npx nodemon --watch *.js --watch package.json --watch src --watch ../stimsrv/src --exec "npx" stimsrv experiment.js
 
 pause

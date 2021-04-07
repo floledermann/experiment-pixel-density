@@ -1,6 +1,6 @@
 :loop
 
-call node --inspect-brk ../stimsrv experiment-loop.js
+call node --inspect-brk ../stimsrv experiment.js
 
 goto :loop
 
