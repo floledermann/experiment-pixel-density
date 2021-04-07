@@ -23,9 +23,13 @@ module.exports = {
   devices: desktop.devices,
   roles: desktop.roles, 
   storage: desktop.storage,
+  
+  context: {
+    minReversals: 0
+  },
    
   tasks: [
-  /*
+  
     snellen({
       //rotate: random([-2,+2]), // add random rotation to prevent aliasing
       pixelAlign: false,
@@ -40,11 +44,11 @@ module.exports = {
           startValue: "5mm",
           stepSize: 1.2,
           stepType: "multiply", 
-          minReversals: 0, //5,
+          minReversals: context => context.minReversals,
           minTrials: 2
       })
     }),
-    
+
     centerline({
       centerLine: random.pick([true,false]),
       angle: random.range(0,360, {round: 1}),
@@ -52,7 +56,7 @@ module.exports = {
         startValue: "2mm",
         stepSize: 1.2,
         stepType: "multiply",
-        minReversals: 0, //5,
+        minReversals: context => context.minReversals,
         minTrials: 2
       })
     }),
@@ -84,7 +88,7 @@ module.exports = {
             startValue: "1.5mm",
             stepSize: 1.2,
             stepType: "multiply", 
-            minReversals: 0, //5,
+            minReversals: context => context.minReversals,
             minTrials: 2
         })
       }
@@ -118,7 +122,7 @@ module.exports = {
             startValue: "1.5mm",
             stepSize: 1.2,
             stepType: "multiply", 
-            minReversals: 0, //5,
+            minReversals: context => context.minReversals,
             minTrials: 2
         })
       }
@@ -131,7 +135,7 @@ module.exports = {
         startValue: "5mm",
         stepSize: 1.2,
         stepType: "multiply",
-        minReversals: 0, //5
+        minReversals: context => context.minReversals,
         minTrials: 2
       })
     }),
@@ -142,11 +146,11 @@ module.exports = {
         startValue: "5mm",
         stepSize: 1.2,
         stepType: "multiply",
-        minReversals: 0, //5
+        minReversals: context => context.minReversals,
         minTrials: 2
       })
     }),
-    */
+
     text({
       conditions: [
         { text: "Kamao" },
@@ -166,12 +170,12 @@ module.exports = {
             startValue: "3mm",
             stepSize: 1.1,
             stepType: "multiply", 
-            minReversals: 0, //5,
+            minReversals: context => context.minReversals,
             minTrials: 2
         })
       }
     }),
-    
+
   /*
     pause({
       buttondisplay: "control",
