@@ -11,7 +11,7 @@ function renderText(ctx, condition) {
 {
   
   condition = Object.assign({
-    text: "ABC abc",
+    text: "<no text defined>",
     fontStyle: "normal",
     fontVariant: "normal",
     fontWeight: "normal",
@@ -58,7 +58,7 @@ function renderText(ctx, condition) {
 module.exports = function(config) {
   
   config.parameters = Object.assign({
-    text: "ABC abc",
+    text: "<no text defined>",
     fontStyle: "normal",
     fontVariant: "normal",
     fontWeight: "normal",
@@ -86,6 +86,57 @@ module.exports = function(config) {
     }
   ];
   
+  let sets = {
+    "e-a": [
+      ["Kamao","Kameo","Kemao","Kemeo"],
+      ["andern","endern","andarn","endarn"],
+      ["Rasta","Raste","Resta","Reste"]
+    ],
+    "rn-m-nn": [
+      ["Lerno","Lemo","Lenno"],
+      ["Serna","Sema","Senna"],
+      ["Korne","Kome","Konne"]
+    ],
+    "D-O-Q": [
+      ["Oelm","Delm","Qelm"],
+      ["Oigel","Digel","Qigel"],
+      ["Oarti","Darti","Qarti"],
+      ["RIOL","RIDL","RIQL"]
+    ],
+    "R-B-P": [
+      ["Rug","Bug","Pug"],
+      ["Rein","Bein","Pein"],
+      ["Rest","Best","Pest"],
+    ],
+    "ff-ll-fl-lf": [
+      ["Stoffen","Stollen","Stolfen","Stoflen"],
+      ["Saffe","Salle","Salfe","Safle"],
+    ],
+    "l-f": [
+      ["Kolin","Kofin"],
+      ["fokal","lokal"],
+    ],
+    "ll-il-li": [
+      ["Deila","Della","Delia"],
+      ["Monail","Monali","Monall"],
+    ],
+    "i-l": [
+      ["Aigen","Algen"],
+    ],
+    /*
+    "C-G-O": [
+    ],
+    "c-o": [
+    ],  
+*/    
+  }
+  
+  for (let set of Object.values(sets)) {
+    for (let subset of set) {
+      subset.sort();  // sort in place
+    }
+  }
+  
   // add default values explicitly to conditions in order to have each condition fully specified
   let conditionKeys = new Set();
   for (let cond of config.conditions) {
@@ -108,6 +159,28 @@ module.exports = function(config) {
     selectCondition: random.pick
   }, config.options);
   
+  config.options.selectCondition = function(sets) {
+    return function(context) {
+      let setKeys = Object.keys(sets);
+      let pick = random.pick(setKeys)();
+      return {
+        next: function() {
+          let key = pick.next().value;
+          let index = Math.floor(sets[key].length * Math.random());
+          let text = random.pick(sets[key][index])().next().value;
+          return {
+            done: false,
+            value: {
+              set: key,
+              subset: index,
+              text: text
+            }
+          }
+        }
+      }
+    }
+  }
+  
   let canvasOptions = {
     dimensions: ["fontSize"],
     intensities: ["outlineIntensity","outline2Intensity"]
@@ -124,13 +197,13 @@ module.exports = function(config) {
           display: renderer,
           // apply letter-spacing on button to avoid hint by text length
           // unfortunately CSS applies letter-spacing after the last letter, so we need this hack
-          response: htmlButtons(config.conditions.map(c => ({label: x => ('<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + x.text + '</span>'), response: c }))),
+          response: htmlButtons(condition => sets[condition.set][condition.subset].map(t => ({label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + t.toUpperCase() + '</span>', response: {text: t} }))),
           monitor: renderer,
           control: null,
         }
       }
     },
-    controller: parameterController(config.parameters, config.options.selectCondition(config.conditions))
+    controller: parameterController(config.parameters, config.options.selectCondition(sets))
   }
 }
 
