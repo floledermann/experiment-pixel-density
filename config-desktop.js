@@ -63,6 +63,7 @@ module.exports = {
     {
       role: "supervisor",
       device: "main",
+      screen: "right",
       interfaces: ["monitor", "control"],
       description: "Supervisor screen and experiment control"
     },

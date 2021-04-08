@@ -25,11 +25,20 @@ module.exports = {
   storage: desktop.storage,
   
   context: {
-    minReversals: 0
+    minReversals: 1
   },
    
   tasks: [
-  
+
+    pause({
+      message: {
+        display: "Waiting for the experiment to start...",
+        monitor: "Press Start or hit any key to start the experiment."
+      },
+      button: "Start",
+      buttondisplay: "control",
+    }),  
+
     snellen({
       //rotate: random([-2,+2]), // add random rotation to prevent aliasing
       pixelAlign: false,
@@ -175,14 +184,7 @@ module.exports = {
         })
       }
     }),
-
-  /*
-    pause({
-      buttondisplay: "control",
-      displaymessage: "Waiting for the experiment to start...",
-      monitormessage: "Press Start or hit any key to start the experiment.",
-      buttonlabel: "Start"
-    }),*/   
+/* */
     
     pause({
       message: {
