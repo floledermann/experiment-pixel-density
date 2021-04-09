@@ -1,16 +1,16 @@
 
-const snellen = require("stimsrv/src/tasks/snellen.js");
-const bangbox = require("stimsrv/src/tasks/bangbox.js");
-const tao = require("stimsrv/src/tasks/aucklandoptotypes.js");
-const pause = require("stimsrv/src/tasks/pause.js");
+const snellen = require("stimsrv/task/snellen");
+const bangbox = require("stimsrv/task/bangbox");
+const tao = require("stimsrv/task/aucklandoptotypes");
+const pause = require("stimsrv/task/pause");
 
-const staircase = require("stimsrv/src/controller/staircase.js");
-const random = require("stimsrv/src/controller/random.js");
-const sequence = require("stimsrv/src/controller/sequence.js");
+const staircase = require("stimsrv/controller/staircase");
+const random = require("stimsrv/controller/random");
+const sequence = require("stimsrv/controller/sequence");
 
-const centerline = require("./src/tasks/centerline.js");   
-const dashedline = require("./src/tasks/dashedline.js");  
-const text = require("./src/tasks/text.js");  
+const centerline = require("./src/task/centerline.js");   
+const dashedline = require("./src/task/dashedline.js");  
+const text = require("./src/task/text.js");  
 
 const setup = require("./setup-lab.js");
 

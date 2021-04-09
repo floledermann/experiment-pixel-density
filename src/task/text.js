@@ -1,14 +1,13 @@
 
 const Dimension = require("another-dimension");
 
-const htmlButtons = require("stimsrv/src/ui/htmlButtons.js");
-const parameterController = require("stimsrv/src/controller/parameterController.js");
-const random = require("stimsrv/src/controller/random.js");
+const htmlButtons = require("stimsrv/ui/htmlButtons");
+const parameterController = require("stimsrv/controller/parameterController");
+const random = require("stimsrv/controller/random");
 
-const canvasRenderer = require("stimsrv/src/stimuli/canvas/canvasRenderer.js");
+const canvasRenderer = require("stimsrv/stimulus/canvas/canvasRenderer");
 
 function renderText(ctx, condition) {
-{
   
   condition = Object.assign({
     text: "<no text defined>",
@@ -53,7 +52,7 @@ function renderText(ctx, condition) {
   
   ctx.fillText(c.text, 0, 0);
  
-}}
+}
 
 module.exports = function(config) {
   
