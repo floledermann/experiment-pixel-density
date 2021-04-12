@@ -63,7 +63,7 @@ module.exports = {
               "*": "Please continue the experiment at Station " + context.targetStation + ".",
               "control": "Transition to Station " + context.targetStation
             };
-            msg["station" + context.targetStation + ".display"] = "Continue the experiment here. Press 'Continue' when you're ready";
+            msg["station" + context.targetStation + ".display"] = "Continue the experiment here.\nPress «Continue» when you're ready";
             return msg;
           },
         }),  
@@ -219,7 +219,7 @@ module.exports = {
     pause({
       message: {
         "*": "Please continue the experiment at Station A.",
-        "stationA.display": "Thank you for your effort!\n\nAs a final step, please answer a few quick questions about your experience during the experiment.\n\nPress 'Continue' when you are ready."
+        "stationA.display": "Thank you for your effort!\n\nAs a final step, please answer a few quick questions about your experience during the experiment.\n\nPress «Continue» when you are ready."
       },
     }),
 
