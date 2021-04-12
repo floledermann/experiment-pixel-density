@@ -19,7 +19,8 @@ const messages = require("./messages.js");
 pause.defaults({
   background: "#eeeeff",
   textcolor: "#000000",
-  buttondisplay: "response"
+  buttondisplay: "response",
+  style: "max-width: 30em; text-align: justify;"
 });
 
 // stimsrv experiment definition
@@ -66,6 +67,7 @@ module.exports = {
             msg["station" + context.targetStation + ".display"] = "Continue the experiment here.\nPress «Continue» when you're ready";
             return msg;
           },
+          style: null
         }),  
 
         snellen({
