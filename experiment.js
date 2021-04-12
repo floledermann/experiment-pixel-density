@@ -1,8 +1,8 @@
 
 const snellen = require("stimsrv/task/snellen");
-const bangbox = require("stimsrv/task/bangbox");
 const tao = require("stimsrv/task/aucklandoptotypes");
 const pause = require("stimsrv/task/pause");
+const loop = require("stimsrv/task/loop");
 
 const staircase = require("stimsrv/controller/staircase");
 const random = require("stimsrv/controller/random");
@@ -15,6 +15,12 @@ const text = require("./src/task/text.js");
 const setup = require("./setup-lab.js");
 
 const messages = require("./messages.js");
+
+pause.defaults({
+  background: "#eeeeff",
+  textcolor: "#000000",
+  buttondisplay: "response"
+});
 
 // stimsrv experiment definition
 module.exports = {
@@ -29,19 +35,17 @@ module.exports = {
     pause({
       message: {
         "*": "Please start the experiment at Station A.",
-        "stationA.display": messages.welcome
+         "stationA.display": messages.welcome
       },
-      button: "Continue",
-      buttondisplay: "response"
     }),  
+    
+    // TODO: questionannaire
 
     pause({
       message: {
         "*": "Please start the experiment at Station A.",
         "stationA.display": messages.welcome2
       },
-      button: "Continue",
-      buttondisplay: "response"
     }),  
 
     loop({
@@ -61,9 +65,7 @@ module.exports = {
             };
             msg["station" + context.targetStation + ".display"] = "Continue the experiment here. Press 'Continue' when you're ready";
             return msg;
-          }),
-          button: "Continue",
-          buttondisplay: "response"
+          },
         }),  
 
         snellen({
@@ -213,6 +215,15 @@ module.exports = {
         }),
       ]
     }),
+
+    pause({
+      message: {
+        "*": "Please continue the experiment at Station A.",
+        "stationA.display": "Thank you for your effort!\n\nAs a final step, please answer a few quick questions about your experience during the experiment.\n\nPress 'Continue' when you are ready."
+      },
+    }),
+
+    // TODO: questionannaire
     
     pause({
       message: {
@@ -221,7 +232,7 @@ module.exports = {
       },
       button: "Store Results & Restart",
       buttondisplay: "control"
-    })
+    }),
   ]
   
 }

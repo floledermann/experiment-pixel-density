@@ -1,4 +1,4 @@
-const filestorage = require("stimsrv/src/storage/filestorage.js");
+const filestorage = require("stimsrv/storage/filestorage");
 
 module.exports = {
   devices: [
@@ -31,7 +31,7 @@ module.exports = {
     },
     {
       name: "Response Input (Galaxy Tab)",
-      id: "responseTablet",
+      id: "response",
       resolution: "hd",
       pixeldensity: 440,
       viewingdistance: 350
@@ -73,39 +73,46 @@ module.exports = {
   
   roles: [
     {
-      role: "supervisor",
-      device: ["supervisor","dev"],
-      interfaces: ["monitor", "control"]
-    },
-    {
-      role: "response",
-      device: ["responseTablet","dev"],
-      interfaces: ["response"]
-    },
-    {
       role: "stationA",
-      device: ["stationA", "dev"],
+      description: "Station A (Main PC)",
+      devices: ["stationA", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationB",
-      device: ["stationB", "dev"],
+      description: "Station B (Google Pixel 2)",
+      devices: ["stationB", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationC",
-      device: ["stationC", "dev"],
+      description: "Station C (Sony Xperia Z5-P)",
+      devices: ["stationC", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationD",
-      device: ["stationD", "dev"],
+      description: "Station D (...)",
+      devices: ["stationD", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationE",
-      device: ["stationE", "dev"],
+      description: "Station E (...)",
+      devices: ["stationE", "dev"],
       interfaces: ["display"]
+    },
+    {
+      role: "response",
+      description: "Response Input (Galaxy Tab)",
+      devices: ["response","dev"],
+      interfaces: ["response"]
+    },
+    {
+      role: "supervisor",
+      description: "Supervisor",
+      devices: ["supervisor","dev"],
+      interfaces: ["monitor", "control"]
     },
   ],
   
