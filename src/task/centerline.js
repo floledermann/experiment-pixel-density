@@ -143,6 +143,6 @@ module.exports = function(parameters, options) {
         }
       }
     },
-    controller: parameterController(parameters)
+    controller: parameterController({parameters: parameters})
   }
 }

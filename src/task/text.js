@@ -202,7 +202,10 @@ module.exports = function(config) {
         }
       }
     },
-    controller: parameterController(config.parameters, config.options.selectCondition(sets))
+    controller: parameterController({
+      parameters: config.parameters,
+      conditions: config.options.selectCondition(sets)
+    })
   }
 }
 

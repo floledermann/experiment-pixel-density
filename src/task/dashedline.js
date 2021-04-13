@@ -141,7 +141,10 @@ module.exports = function(config) {
         }
       }
     },
-    controller: parameterController(config.parameters, config.options.selectCondition(config.conditions))
+    controller: parameterController({
+      parameters: config.parameters,
+      conditions: config.options.selectCondition(config.conditions)
+    })
   }
 }
 
