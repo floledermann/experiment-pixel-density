@@ -52,8 +52,8 @@ module.exports = {
     loop({
       
       context: {
-        targetStation: sequence(["B","C","D","E"]),
-        minReversals: 5
+        targetStation: sequence(["B","C"]), //,"D","E"]),
+        minReversals: 1
       },
       
       tasks: [
@@ -86,7 +86,8 @@ module.exports = {
               stepType: "multiply", 
               minReversals: context => context.minReversals,
               minTrials: 2
-          })
+          }),
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
 
         centerline({
