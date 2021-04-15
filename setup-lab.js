@@ -8,8 +8,6 @@ module.exports = {
       resolution: "hd",
       pixeldensity: 91,
       viewingdistance: 600,
-      mouse: true,
-      keyboard: true
     },
     {
       name: "Supervisor",
@@ -17,8 +15,6 @@ module.exports = {
       resolution: "hd",
       pixeldensity: 91,
       viewingdistance: 600,
-      mouse: true,
-      keyboard: true
     },
     {
       name: "Station A (Main PC)",
@@ -26,8 +22,6 @@ module.exports = {
       resolution: "hd",
       pixeldensity: 91,
       viewingdistance: 600,
-      mouse: true,
-      keyboard: true
     },
     {
       name: "Response Input (Galaxy Tab)",
@@ -43,7 +37,6 @@ module.exports = {
       pixeldensity: 440,
       viewingdistance: 350,
       gamma: 1.6,
-      touch: false
     },
     {
       name: "Station C (Sony Xperia Z5-P)",
@@ -51,7 +44,6 @@ module.exports = {
       resolution: "uhd",
       pixeldensity: 801,
       viewingdistance: 350,
-      touch: false 
     },
     {
       name: "Station D ()",
@@ -59,7 +51,6 @@ module.exports = {
       resolution: "uhd",
       pixeldensity: 801,
       viewingdistance: 350,
-      touch: false
     },
     {
       name: "Station E ()",
@@ -67,7 +58,6 @@ module.exports = {
       resolution: "uhd",
       pixeldensity: 801,
       viewingdistance: 350,
-      touch: false
     },
   ],
   
