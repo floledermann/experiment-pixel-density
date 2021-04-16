@@ -53,7 +53,7 @@ module.exports = {
       
       context: {
         targetStation: sequence(["B","C"]), //,"D","E"]),
-        minReversals: 1
+        minReversals: 1,
       },
       
       tasks: [
@@ -99,7 +99,8 @@ module.exports = {
             stepType: "multiply",
             minReversals: context => context.minReversals,
             minTrials: 2
-          })
+          }),
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
         
         dashedline({
@@ -132,7 +133,8 @@ module.exports = {
                 minReversals: context => context.minReversals,
                 minTrials: 2
             })
-          }
+          },
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
         
         dashedline({
@@ -166,7 +168,8 @@ module.exports = {
                 minReversals: context => context.minReversals,
                 minTrials: 2
             })
-          }
+          },
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
         
         tao({
@@ -178,7 +181,8 @@ module.exports = {
             stepType: "multiply",
             minReversals: context => context.minReversals,
             minTrials: 2
-          })
+          }),
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
         
         tao({
@@ -189,7 +193,8 @@ module.exports = {
             stepType: "multiply",
             minReversals: context => context.minReversals,
             minTrials: 2
-          })
+          }),
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
 
         text({
@@ -214,7 +219,8 @@ module.exports = {
                 minReversals: context => context.minReversals,
                 minTrials: 2
             })
-          }
+          },
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
       ]
     }),
