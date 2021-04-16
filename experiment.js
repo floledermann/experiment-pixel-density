@@ -198,12 +198,6 @@ module.exports = {
         }),
 
         text({
-          conditions: [
-            { text: "Kamao" },
-            { text: "Kameo" },
-            { text: "Kemao" },
-            { text: "Kemeo" },
-          ],
           parameters: {
             angle: random.range(-90,90, {round: 1}),
             outline: true,
