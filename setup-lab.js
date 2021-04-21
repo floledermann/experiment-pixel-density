@@ -31,12 +31,13 @@ module.exports = {
       viewingdistance: 350
     },
     {
-      name: "Station B (Google Pixel 2)",
+      name: "Station B (Sony Xperia V)",
       id: "stationB",
       resolution: "hd",
-      pixeldensity: 440,
+      pixeldensity: 312,
       viewingdistance: 350,
       gamma: 1.6,
+      client: "browser-simple",
     },
     {
       name: "Station C (Sony Xperia Z5-P)",
@@ -46,17 +47,18 @@ module.exports = {
       viewingdistance: 350,
     },
     {
-      name: "Station D ()",
+      name: "Station D (LG P-970)",
       id: "stationD",
       resolution: "uhd",
-      pixeldensity: 801,
+      pixeldensity: 228,
       viewingdistance: 350,
+      client: "browser-simple",
     },
     {
-      name: "Station E ()",
+      name: "Station E (Google Nexus 6P)",
       id: "stationE",
       resolution: "uhd",
-      pixeldensity: 801,
+      pixeldensity: 520,
       viewingdistance: 350,
     },
   ],
@@ -70,25 +72,25 @@ module.exports = {
     },
     {
       role: "stationB",
-      description: "Station B (Google Pixel 2)",
+      description: "Station B",
       devices: ["stationB", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationC",
-      description: "Station C (Sony Xperia Z5-P)",
+      description: "Station C",
       devices: ["stationC", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationD",
-      description: "Station D (...)",
+      description: "Station D",
       devices: ["stationD", "dev"],
       interfaces: ["display"]
     },
     {
       role: "stationE",
-      description: "Station E (...)",
+      description: "Station E",
       devices: ["stationE", "dev"],
       interfaces: ["display"]
     },
