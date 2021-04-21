@@ -74,7 +74,7 @@ module.exports = {
       role: "stationB",
       description: "Station B",
       devices: ["stationB", "dev"],
-      interfaces: ["display"]
+      interfaces: ["display"],
     },
     {
       role: "stationC",
