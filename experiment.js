@@ -41,6 +41,12 @@ module.exports = {
     }),  
     
     // TODO: questionannaire
+    
+    //Gender?
+    //Other / Non-binary
+    //Would prefer not to say
+    
+    //Vision: "Normal or corrected to normal"
 
     pause({
       message: {
