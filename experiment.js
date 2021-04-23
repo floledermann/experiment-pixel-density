@@ -29,7 +29,11 @@ module.exports = {
   name: "HD Map Symbolization - Experiment 1",
   
   devices: setup.devices,
-  roles: setup.roles, 
+  roles: setup.roles,
+  
+  settings: {
+    simpleBrowserRefresh: 5
+  },
   
   tasks: [
   
