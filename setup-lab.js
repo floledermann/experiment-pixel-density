@@ -8,6 +8,8 @@ module.exports = {
       resolution: "hd",
       pixeldensity: 91,
       viewingdistance: 600,
+      devicePixelRatio: 1,
+      imageSize: "720x1280",
     },
     {
       name: "Supervisor",
@@ -38,6 +40,8 @@ module.exports = {
       viewingdistance: 350,
       gamma: 1.6,
       client: "browser-simple",
+      devicePixelRatio: 1,
+      imageSize: "720x1280",
     },
     {
       name: "Station C (Sony Xperia Z5-P)",
