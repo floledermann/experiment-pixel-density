@@ -14,10 +14,11 @@ function renderText(ctx, condition) {
     fontStyle: "normal",
     fontVariant: "normal",
     fontWeight: "normal",
-    fontSize: "4mm",
-    lineHeight: 1.5,
-    fontStretch: "normal",
-    fontFamily: "Helvetica,Arial,sans-serif",
+    fontSize: 4,
+    // not supported by node-canvas
+    //lineHeight: 1.5,
+    //fontStretch: "normal",
+    fontFamily: "Arial",
     angle: 0
   }, condition);
   
@@ -26,7 +27,13 @@ function renderText(ctx, condition) {
   ctx.textAlign = "center";
   
   let c = condition;
-  ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px/${c.lineHeight} ${c.fontStretch} ${c.fontFamily} `
+  
+  // use only properties supported by node-canvas
+  // see https://github.com/Automattic/node-canvas/wiki/Compatibility-Status#text-styles
+  // (currently, line-height and font-stretch are omitted)
+  //ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px/${c.lineHeight} ${c.fontStretch} ${c.fontFamily}`;
+  ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px ${c.fontFamily}`;
+  //console.log("Font: " + ctx.font);
   
   if (condition.outline && condition.outlineWidth > 0) {
     //console.log(condition.outlineWidth * condition.fontSize);
@@ -62,9 +69,10 @@ module.exports = function(config) {
     fontVariant: "normal",
     fontWeight: "normal",
     fontSize: "4mm",
-    lineHeight: 1.5,
-    fontStretch: "normal",
-    fontFamily: "Helvetica,Arial,sans-serif",
+    // not supported by node-canvas
+    //lineHeight: 1.5,
+    //fontStretch: "normal",
+    fontFamily: "Arial",
     angle: 0,
     outline: false,
     outlineWidth: 0.25, // relative to fontSize
