@@ -33,7 +33,7 @@ function renderText(ctx, condition) {
   // (currently, line-height and font-stretch are omitted)
   //ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px/${c.lineHeight} ${c.fontStretch} ${c.fontFamily}`;
   ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px ${c.fontFamily}`;
-  //console.log("Font: " + ctx.font);
+  console.log("Font: " + ctx.font);
   
   if (condition.outline && condition.outlineWidth > 0) {
     //console.log(condition.outlineWidth * condition.fontSize);
@@ -188,13 +188,18 @@ module.exports = function(config) {
     }
   }
   
+  config.fonts = config.fonts || [];
+  
   let canvasOptions = {
     dimensions: ["fontSize"],
-    intensities: ["outlineIntensity","outline2Intensity"]
+    intensities: ["outlineIntensity","outline2Intensity"],
+    fonts: config.fonts
   };
   
   let renderer = canvasRenderer(renderText, canvasOptions);
   
+  let fontResources = config.fonts.map(f => f.resource);
+    
   return {
     name: "text",
     description: "Text", 
@@ -213,7 +218,8 @@ module.exports = function(config) {
     controller: parameterController({
       parameters: config.parameters,
       conditions: config.options.selectCondition(sets)
-    })
+    }),
+    resources: fontResources
   }
 }
 
