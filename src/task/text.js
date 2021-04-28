@@ -188,8 +188,6 @@ module.exports = function(config) {
     }
   }
   
-  config.fonts = config.fonts || [];
-  
   let canvasOptions = {
     dimensions: ["fontSize"],
     intensities: ["outlineIntensity","outline2Intensity"],
@@ -198,8 +196,6 @@ module.exports = function(config) {
   
   let renderer = canvasRenderer(renderText, canvasOptions);
   
-  let fontResources = config.fonts.map(f => f.resource);
-    
   return {
     name: "text",
     description: "Text", 
@@ -219,7 +215,7 @@ module.exports = function(config) {
       parameters: config.parameters,
       conditions: config.options.selectCondition(sets)
     }),
-    resources: fontResources
+    resources: renderer.resources
   }
 }
 
