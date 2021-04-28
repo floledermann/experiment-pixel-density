@@ -8,6 +8,8 @@ const staircase = require("stimsrv/controller/staircase");
 const random = require("stimsrv/controller/random");
 const sequence = require("stimsrv/controller/sequence");
 
+const resource = require("stimsrv/util/resource");
+
 const centerline = require("./src/task/centerline.js");   
 const dashedline = require("./src/task/dashedline.js");  
 const text = require("./src/task/text.js");  
@@ -20,7 +22,7 @@ pause.defaults({
   background: "#eeeeff",
   textcolor: "#000000",
   buttondisplay: "response",
-  style: "max-width: 30em; text-align: justify;"
+  messageStyle: "max-width: 30em; text-align: justify;"
 });
 
 // stimsrv experiment definition
@@ -211,10 +213,11 @@ module.exports = {
           parameters: {
             angle: random.range(-90,90, {round: 1}),
             outline: true,
-            outline2: true,
+            outline2: false,
             backgroundIntensity: 0.5,
             outlineIntensity: 1,
             outlineWidth: 0.25,
+            fontFamily: "Orelega One",
             fontSize:
               staircase({
                 startValue: "3mm",
@@ -224,6 +227,10 @@ module.exports = {
                 minTrials: 2
             })
           },
+          fonts: [{
+            family: "Orelega One",
+            resource: resource("font/OrelegaOne-Regular.ttf","resources/font/OrelegaOne-Regular.ttf"),
+          }],
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
       ]
