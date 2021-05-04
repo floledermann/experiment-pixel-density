@@ -135,8 +135,10 @@ module.exports = function(parameters, options) {
         interfaces: {
           display: renderer,
           response: htmlButtons([
-            {label: "Centerline", canvas: buttonCanvas, response: {centerLine: true}},
-            {label: "No&nbsp;Centerline", canvas: buttonCanvas, response: {centerLine: false}}
+            {label: "Triple&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true}},
+            //{label: "Patterned&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
+            //{label: "Gray&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
+            {label: "Cased&nbsp;Line", canvas: buttonCanvas, response: {centerLine: false}}
           ]),
           monitor: renderer,
           control: null,
