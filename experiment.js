@@ -118,7 +118,7 @@ module.exports = {
           //size: "3px",
           size:
             staircase({
-              startValue: "5mm",
+              startValue: "3mm",
               stepSize: 1.2,
               stepType: "multiply", 
               minReversals: context => context.minReversals,
@@ -131,7 +131,7 @@ module.exports = {
           centerLine: random.pick([true,false]),
           angle: random.range(0,360, {round: 1}),
           size: staircase({
-            startValue: "2mm",
+            startValue: "1.5mm",
             stepSize: 1.2,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -164,7 +164,7 @@ module.exports = {
             length: "50mm",
             width:
               staircase({
-                startValue: "1.5mm",
+                startValue: "1mm",
                 stepSize: 1.2,
                 stepType: "multiply", 
                 minReversals: context => context.minReversals,
@@ -199,7 +199,7 @@ module.exports = {
             length: "50mm",
             width:
               staircase({
-                startValue: "1.5mm",
+                startValue: "1mm",
                 stepSize: 1.2,
                 stepType: "multiply", 
                 minReversals: context => context.minReversals,
@@ -213,7 +213,7 @@ module.exports = {
           foregroundIntensity: 0,
           backgroundIntensity: 1,
           size: staircase({
-            startValue: "5mm",
+            startValue: "3mm",
             stepSize: 1.2,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -225,7 +225,7 @@ module.exports = {
         tao({
           vanishing: true,
           size: staircase({
-            startValue: "5mm",
+            startValue: "4mm",
             stepSize: 1.2,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -236,7 +236,7 @@ module.exports = {
 
         text({
           parameters: {
-            angle: random.range(-90,90, {round: 1}),
+            angle: random.range(-60,60, {round: 1}),
             outline: true,
             outline2: false,
             backgroundIntensity: 0.5,
@@ -245,7 +245,7 @@ module.exports = {
             fontFamily: "Roboto",
             fontSize:
               staircase({
-                startValue: "3mm",
+                startValue: "2.5mm",
                 stepSize: 1.1,
                 stepType: "multiply", 
                 minReversals: context => context.minReversals,
