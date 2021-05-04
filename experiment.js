@@ -24,7 +24,6 @@ pause.defaults({
   background: "#eeeeff",
   textcolor: "#000000",
   buttondisplay: "response",
-  messageStyle: "max-width: 30em; text-align: justify;"
 });
 
 // stimsrv experiment definition
@@ -45,12 +44,26 @@ module.exports = {
   
   css: `
     body.has-ui-response {
-      font-size: 20px;
+      font-size: 24px;
+    }
+    
+    body.is-device-stationB {
+      font-size: 24px;
+    }
+    
+    .content {
+      max-width: 17em;
+      text-align: left;
+    }
+    
+    .is-device-main .content {
+      max-width: 32em;
+      font-size: 1.5em;
     }
     
     .buttons-tao {
       display: grid;
-      grid-template-columns: repeat(5, 7em);
+      grid-template-columns: repeat(5, 6em);
     }
   `,
   
@@ -88,8 +101,8 @@ module.exports = {
     loop({
       
       context: {
-        //targetStation: random.sequence(["A","B","C","D"]),
-        targetStation: sequence(["A","B","C","D"]),
+        targetStation: random.sequence(["A","B","C","D"]),
+        //targetStation: sequence(["A","B","C","D"]),
         minReversals: 1,
       },
       
@@ -104,7 +117,6 @@ module.exports = {
             msg["station" + context.targetStation + ".display"] = "Continue the experiment here.\nPress «Continue» when you're ready";
             return msg;
           },
-          style: null
         }),  
 
         snellen({
@@ -258,6 +270,7 @@ module.exports = {
           }],
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
+
       ]
     }),
 
@@ -273,6 +286,7 @@ module.exports = {
     pause({
       message: {
         display: "The experiment was completed successfully.\nThank you for your participation!",
+        response: "The experiment was completed successfully.\nThank you for your participation!",
         monitor: "Experiment ended."
       },
       button: "Store Results & Restart",
