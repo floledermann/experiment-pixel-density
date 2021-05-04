@@ -103,7 +103,7 @@ module.exports = {
       context: {
         targetStation: random.sequence(["A","B","C","D"]),
         //targetStation: sequence(["A","B","C","D"]),
-        minReversals: 1,
+        minReversals: 5,
       },
       
       tasks: [
