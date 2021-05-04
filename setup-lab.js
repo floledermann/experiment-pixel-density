@@ -13,8 +13,8 @@ module.exports = {
     {
       name: "Supervisor",
       id: "supervisor",
-      pixeldensity: 91,
-      viewingdistance: 600,
+      pixeldensity: 265,
+      viewingdistance: 500,
     },
     {
       name: "Main Monitor",
