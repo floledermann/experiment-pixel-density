@@ -47,6 +47,11 @@ module.exports = {
     body.has-ui-response {
       font-size: 20px;
     }
+    
+    .buttons-tao {
+      display: grid;
+      grid-template-columns: repeat(5, 7em);
+    }
   `,
   
   tasks: [
