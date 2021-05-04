@@ -25,16 +25,18 @@ module.exports = {
   roles: setup.roles,
 
   storage: filestorage({
-    destination: "./calibration_data"
+    destination: "./data_calibrate"
   }),
   
   tasks: [
 
     snellen({
+      angle: sequence.loop([0,90,180,270,270]),
       pixelAlign: false,
-      foregroundIntensity: 0,
+      foregroundIntensity: sequence.loop([0,0,0,0,1]),
       backgroundIntensity: 1,
       size: "48mm",
+      responseCondition: { size: "15mm" }
     }),
 
   ]

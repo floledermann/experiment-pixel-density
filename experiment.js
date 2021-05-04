@@ -8,6 +8,8 @@ const staircase = require("stimsrv/controller/staircase");
 const random = require("stimsrv/controller/random");
 const sequence = require("stimsrv/controller/sequence");
 
+const filestorage = require("stimsrv/storage/filestorage");
+
 const resource = require("stimsrv/util/resource");
 
 const centerline = require("./src/task/centerline.js");   
@@ -37,6 +39,10 @@ module.exports = {
     simpleBrowserRefresh: 5
   },
   
+  storage: filestorage({
+    destination: "./data_pilot"
+  }),
+  
   tasks: [
   
     pause({
@@ -44,7 +50,7 @@ module.exports = {
         "*": "Please start the experiment at Station A.",
          "stationA.display": messages.welcome
       },
-    }),  
+    }),
     
     // TODO: questionannaire
     
@@ -64,8 +70,8 @@ module.exports = {
     loop({
       
       context: {
-        targetStation: sequence(["B","C"]), //,"D","E"]),
-        minReversals: 1,
+        targetStation: random.sequence(["B","C","D","E"]),
+        minReversals: 5,
       },
       
       tasks: [

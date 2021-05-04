@@ -8,6 +8,8 @@ const staircase = require("stimsrv/controller/staircase");
 const random = require("stimsrv/controller/random");
 const sequence = require("stimsrv/controller/sequence");
 
+const filestorage = require("stimsrv/storage/filestorage");
+
 const resource = require("stimsrv/util/resource");
 
 const centerline = require("./src/task/centerline.js");   
@@ -33,6 +35,10 @@ module.exports = {
   devices: setup.devices,
   roles: setup.roles,
   
+  storage: filestorage({
+    destination: "./data_test"
+  }),
+
   settings: {
     simpleBrowserRefresh: 5
   },

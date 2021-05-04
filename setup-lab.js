@@ -23,9 +23,9 @@ module.exports = {
       viewingdistance: 600,
     },
     {
-      name: "Response Input (Galaxy Tab)",
+      name: "Response Input",
       id: "response",
-      pixeldensity: 440,
+      pixeldensity: 403,
       viewingdistance: 350
     },
     {
@@ -56,7 +56,6 @@ module.exports = {
     {
       name: "Station E (Google Nexus 6P)",
       id: "stationE",
-      resolution: "uhd",
       pixeldensity: 520,
       viewingdistance: 350,
     },
