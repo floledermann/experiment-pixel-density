@@ -231,7 +231,7 @@ module.exports = {
             backgroundIntensity: 0.5,
             outlineIntensity: 1,
             outlineWidth: 0.25,
-            fontFamily: "Orelega One",
+            fontFamily: "Roboto",
             fontSize:
               staircase({
                 startValue: "3mm",
@@ -242,8 +242,8 @@ module.exports = {
             })
           },
           fonts: [{
-            family: "Orelega One",
-            resource: resource("font/OrelegaOne-Regular.ttf","resources/font/OrelegaOne-Regular.ttf"),
+            family: "Roboto",
+            resource: resource("font/Roboto-Regular.ttf","resources/font/Roboto-Regular.ttf"),
           }],
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
