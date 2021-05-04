@@ -17,8 +17,8 @@ module.exports = {
       viewingdistance: 600,
     },
     {
-      name: "Station A (Main PC)",
-      id: "stationA",
+      name: "Main Monitor",
+      id: "main",
       pixeldensity: 91,
       viewingdistance: 600,
     },
@@ -29,8 +29,8 @@ module.exports = {
       viewingdistance: 350
     },
     {
-      name: "Station B (Sony Xperia V)",
-      id: "stationB",
+      name: "Station A (Sony Xperia V)",
+      id: "stationA",
       pixeldensity: 343,
       viewingdistance: 350,
       gamma: 2.2,
@@ -39,14 +39,14 @@ module.exports = {
       imageSize: "720x880",
     },
     {
-      name: "Station C (Sony Xperia Z5-P)",
-      id: "stationC",
+      name: "Station B (Sony Xperia Z5-P)",
+      id: "stationB",
       pixeldensity: 807,
       viewingdistance: 350,
     },
     {
-      name: "Station D (LG P-970)",
-      id: "stationD",
+      name: "Station C (LG P-970)",
+      id: "stationC",
       pixeldensity: 236,
       viewingdistance: 350,
       client: "browser-simple",
@@ -54,8 +54,8 @@ module.exports = {
       imageSize: "480x520",
     },
     {
-      name: "Station E (Google Nexus 6P)",
-      id: "stationE",
+      name: "Station D (Google Nexus 6P)",
+      id: "stationD",
       pixeldensity: 520,
       viewingdistance: 350,
     },
@@ -63,16 +63,22 @@ module.exports = {
   
   roles: [
     {
-      role: "stationA",
-      description: "Station A (Main PC)",
-      devices: ["stationA", "dev"],
+      role: "main",
+      description: "Main Monitor",
+      devices: ["main", "dev"],
       interfaces: ["display"]
+    },
+    {
+      role: "stationA",
+      description: "Station A",
+      devices: ["stationA", "dev"],
+      interfaces: ["display"],
     },
     {
       role: "stationB",
       description: "Station B",
       devices: ["stationB", "dev"],
-      interfaces: ["display"],
+      interfaces: ["display"]
     },
     {
       role: "stationC",
@@ -87,14 +93,8 @@ module.exports = {
       interfaces: ["display"]
     },
     {
-      role: "stationE",
-      description: "Station E",
-      devices: ["stationE", "dev"],
-      interfaces: ["display"]
-    },
-    {
       role: "response",
-      description: "Response Input (Galaxy Tab)",
+      description: "Response Input",
       devices: ["response","dev"],
       interfaces: ["response"]
     },

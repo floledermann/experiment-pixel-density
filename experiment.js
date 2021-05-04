@@ -47,8 +47,8 @@ module.exports = {
   
     pause({
       message: {
-        "*": "Please start the experiment at Station A.",
-         "stationA.display": messages.welcome
+        "*": "Please start the experiment at the Main Monitor.",
+         "main.display": messages.welcome
       },
     }),
     
@@ -62,16 +62,24 @@ module.exports = {
 
     pause({
       message: {
-        "*": "Please start the experiment at Station A.",
-        "stationA.display": messages.welcome2
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.welcome2
+      },
+    }),  
+
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.welcome3
       },
     }),  
 
     loop({
       
       context: {
-        targetStation: random.sequence(["B","C","D","E"]),
-        minReversals: 5,
+        //targetStation: random.sequence(["A","B","C","D"]),
+        targetStation: sequence(["A","B","C","D"]),
+        minReversals: 1,
       },
       
       tasks: [
@@ -244,8 +252,8 @@ module.exports = {
 
     pause({
       message: {
-        "*": "Please continue the experiment at Station A.",
-        "stationA.display": "Thank you for your effort!\n\nAs a final step, please answer a few quick questions about your experience during the experiment.\n\nPress «Continue» when you are ready."
+        "*": "Please continue the experiment at the Main Monitor.",
+        "main.display": "Thank you for your effort!\n\nAs a final step, please answer a few quick questions about your experience during the experiment.\n\nPress «Continue» when you are ready."
       },
     }),
 
