@@ -43,6 +43,12 @@ module.exports = {
     destination: "./data_pilot"
   }),
   
+  css: `
+    body.has-ui-response {
+      font-size: 20px;
+    }
+  `,
+  
   tasks: [
   
     pause({

@@ -96,7 +96,8 @@ module.exports = {
       role: "response",
       description: "Response Input",
       devices: ["response","dev"],
-      interfaces: ["response"]
+      interfaces: ["response"],
+      fullscreenButton: true
     },
     {
       role: "supervisor",
