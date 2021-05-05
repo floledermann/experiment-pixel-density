@@ -65,6 +65,18 @@ module.exports = {
       display: grid;
       grid-template-columns: repeat(5, 6em);
     }
+    
+    @media (orientation: portrait) {
+      .xbuttons {
+        display: grid;
+        margin-top: 6em;
+        grid-template-columns: repeat(2, 6em);
+      }
+      .buttons-tao {
+        margin-top: 6em;
+        grid-template-columns: repeat(2, 6em);
+      }
+    }
   `,
   
   tasks: [
@@ -220,7 +232,7 @@ module.exports = {
           },
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
-        
+  
         tao({
           foregroundIntensity: 0,
           backgroundIntensity: 1,
