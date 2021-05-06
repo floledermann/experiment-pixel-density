@@ -56,7 +56,7 @@ module.exports = {
       text-align: left;
     }
     
-    .is-device-main .content {
+    .has-role-main .content {
       max-width: 32em;
       font-size: 1.5em;
     }
@@ -67,15 +67,28 @@ module.exports = {
     }
     
     @media (orientation: portrait) {
-      .xbuttons {
+      .buttons {
+        margin-top: 6em;
+      }
+      
+      .current-task-centerline .buttons,
+      .current-task-dashedline .buttons {
         display: grid;
-        margin-top: 6em;
+        grid-template-columns: repeat(1, 8em);
+      }
+      .current-task-text .buttons {
+        display: grid;
+        grid-template-columns: repeat(1, 10em);
+      }
+      .current-task-tao .buttons {
+        display: grid;
         grid-template-columns: repeat(2, 6em);
       }
-      .buttons-tao {
-        margin-top: 6em;
-        grid-template-columns: repeat(2, 6em);
+      .current-task-text .buttons button {
+        height: 2.5em;
+        margin: 0.5em;
       }
+
     }
   `,
   
@@ -154,6 +167,7 @@ module.exports = {
         centerline({
           centerLine: random.pick([true,false]),
           angle: random.range(0,360, {round: 1}),
+          length: "50mm",
           size: staircase({
             startValue: "1.5mm",
             stepSize: 1.2,

@@ -129,7 +129,7 @@ module.exports = function(config) {
   let renderer = canvasRenderer(renderDashedLine, canvasOptions);
   
   return {
-    name: "dashed_line",
+    name: "dashedline",
     description: "Dashed line", 
     ui: function(context) {
       return {
