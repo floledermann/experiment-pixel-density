@@ -250,6 +250,7 @@ module.exports = {
 
         snellen({
           //rotate: random([-2,+2]), // add random rotation to prevent aliasing
+          angle: random.shuffle([0,90,180,270], { loop: true, preventContinuation: true }),
           pixelAlign: false,
           //lowIntensity: 0, //sequence.loop([0,0.25,0.5,0.75,0.9,0.95]),
           //highIntensity: 1.0,
