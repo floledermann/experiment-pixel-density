@@ -115,21 +115,14 @@ module.exports = {
   `,
   
   tasks: [
-  
+
     pause({
       message: {
         "*": "Please start the experiment at the Main Monitor.",
          "main.display": messages.welcome
       },
     }),
-    
-    // TODO: questionannaire
-    
-    //Gender?
-    //Other / Non-binary
-    //Would prefer not to say
-    
-    //Vision: "Normal or corrected to normal"
+
     pause({
       message: {
         "*": "Please start the experiment at the Main Monitor.",
@@ -216,6 +209,13 @@ module.exports = {
       },
     }),  
 
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.start4
+      },
+    }),  
+
     loop({
       
       context: {
@@ -232,7 +232,18 @@ module.exports = {
               "*": "Please continue the experiment at Station " + context.targetStation + ".",
               "control": "Transition to Station " + context.targetStation
             };
-            msg["station" + context.targetStation + ".display"] = "Continue the experiment here.\nPress «Continue» when you're ready";
+            msg["station" + context.targetStation + ".display"] = "Continue the experiment here.\n\nPress «Continue» when you have arrived.";
+            return msg;
+          },
+        }),  
+
+        pause({
+          message: context => {
+            let msg = {
+              "*": "Press «Continue» when you are ready at Station " + context.targetStation + ".",
+              "control": "Transition to Station " + context.targetStation
+            };
+            msg["station" + context.targetStation + ".display"] = "You may take a short break.\n\nPress «Continue» when you're ready to continue the experiment.";
             return msg;
           },
         }),  
