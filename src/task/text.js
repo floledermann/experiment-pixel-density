@@ -119,10 +119,10 @@ module.exports = function(config) {
     "i-l": [
       ["Aiganei","Aiganel","Alganei","Alganel"],
     ],
+    /*
     "o-c-e": [
       ["oce","eco","oec","ceo"]
     ]
-    /*
     "C-G-O": [
     ],
     "c-o": [
