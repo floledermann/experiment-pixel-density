@@ -39,7 +39,7 @@ module.exports = {
   },
   
   storage: filestorage({
-    destination: "./data_pilot"
+    destination: "./data"
   }),
   
   css: `
