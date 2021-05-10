@@ -317,7 +317,7 @@ module.exports = {
           selectCondition: choices => random.shuffle(choices, { loop: true, multiple: 2, preventContinuation: true }),
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
-        
+/*
         dashedline({
           conditions: [
             {
@@ -352,7 +352,7 @@ module.exports = {
           },
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
-  
+*/
         tao({
           foregroundIntensity: 0,
           backgroundIntensity: 1,
