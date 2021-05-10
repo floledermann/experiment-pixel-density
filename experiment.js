@@ -11,6 +11,7 @@ const sequence = require("stimsrv/controller/sequence");
 const filestorage = require("stimsrv/storage/filestorage");
 
 const resource = require("stimsrv/util/resource");
+const htmlButtons = require("stimsrv/ui/htmlButtons");
 
 const centerline = require("./src/task/centerline.js");   
 const dashedline = require("./src/task/dashedline.js");  
@@ -68,7 +69,19 @@ module.exports = {
     
     @media (orientation: portrait) {
       .buttons {
+        display: grid;
+        grid-template-columns: repeat(1, 10em);
         margin-top: 6em;
+      }
+      
+      .current-task-survey-language .buttons,
+      .current-task-survey-vision .buttons {
+        margin-top: 0;
+        grid-template-columns: repeat(1, 14em);
+      }
+
+      .current-task-survey-vision .buttons {
+        grid-template-columns: repeat(1, 17em);
       }
       
       .current-task-centerline .buttons,
@@ -108,18 +121,89 @@ module.exports = {
     //Would prefer not to say
     
     //Vision: "Normal or corrected to normal"
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.survey1_age
+      },
+      button: htmlButtons([
+        "16-25",
+        "26-35",
+        "36-50",
+        "51-65",
+        "66 or older"
+      ]),
+      store: true
+    }),  
 
     pause({
       message: {
         "*": "Please start the experiment at the Main Monitor.",
-        "main.display": messages.welcome2
+        "main.display": messages.survey2_gender
+      },
+      button: htmlButtons([
+        "Female",
+        "Male",
+        "Non-binary or other",
+        "Would prefer not to answer",
+      ]),
+      store: true
+    }),  
+
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.survey3_language
+      },
+      button: htmlButtons([
+        "Englisch",
+        "German",
+        "Greek",
+        "Russian or other cyrillic",
+        "Other European\nor Latin American",
+        "Chinese",
+        "Japanese",
+        "Other Asian or African"
+      ]),
+      name: "survey-language",
+      store: true
+    }),  
+
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.survey4_vision
+      },
+      button: htmlButtons([
+        "Normal vision",
+        "Corrected to normal\n(wearing glasses or contact lenses suitable for reading)",
+        "Short-sighted\n(far objects appear blurred)",
+        "Far-sighted\n(near objects appear blurred)",
+        "Other vision impairment",
+        "Would prefer not to answer"
+      ]),
+      name: "survey-vision",
+      store: true
+    }),  
+
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.start1
       },
     }),  
 
     pause({
       message: {
         "*": "Please start the experiment at the Main Monitor.",
-        "main.display": messages.welcome3
+        "main.display": messages.start2
+      },
+    }),  
+
+    pause({
+      message: {
+        "*": "Please start the experiment at the Main Monitor.",
+        "main.display": messages.start3
       },
     }),  
 
