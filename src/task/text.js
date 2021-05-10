@@ -100,36 +100,28 @@ module.exports = function(config) {
       ["Rasta","Raste","Resta","Reste"]
     ],
     "rn-m-nn": [
-      ["Lerno","Lemo","Lenno"],
-      ["Serna","Sema","Senna"],
-      ["Korne","Kome","Konne"]
-    ],
-    "D-O-Q": [
-      ["Oelm","Delm","Qelm"],
-      ["Oigel","Digel","Qigel"],
-      ["Oarti","Darti","Qarti"],
-      ["RIOL","RIDL","RIQL"]
-    ],
-    "R-B-P": [
-      ["Rug","Bug","Pug"],
-      ["Rein","Bein","Pein"],
-      ["Rest","Best","Pest"],
+      ["Lernos","Lemos","Lennos","Lenos"],
+      ["Sernato","Semato","Sennato","Senato"],
+      ["Karne","Kame","Kanne","Kane"]
     ],
     "ff-ll-fl-lf": [
       ["Stoffen","Stollen","Stolfen","Stoflen"],
       ["Saffe","Salle","Salfe","Safle"],
     ],
     "l-f": [
-      ["Kolin","Kofin"],
-      ["fokal","lokal"],
+      ["Kofifa","Kofila","Kolifa","Kolila"],
+      ["fokef","fokel","lokef","lokel"],
     ],
     "ll-il-li": [
       ["Deila","Della","Delia"],
       ["Monail","Monali","Monall"],
     ],
     "i-l": [
-      ["Aigen","Algen"],
+      ["Aiganei","Aiganel","Alganei","Alganel"],
     ],
+    "o-c-e": [
+      ["oce","eco","oec","ceo"]
+    ]
     /*
     "C-G-O": [
     ],
