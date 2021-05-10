@@ -27,6 +27,10 @@ pause.defaults({
   buttondisplay: "response",
 });
 
+htmlButtons.defaults({
+  clickSound: "/static/resource/resources/sound/click1.wav"
+});
+
 // stimsrv experiment definition
 module.exports = {
   
@@ -42,6 +46,11 @@ module.exports = {
   storage: filestorage({
     destination: "./data"
   }),
+  
+  resources: [
+    "resources/images",
+    "resources/sound"
+  ],
   
   css: `
     body.has-ui-response {
