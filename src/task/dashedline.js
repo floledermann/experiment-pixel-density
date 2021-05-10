@@ -113,10 +113,10 @@ module.exports = function(config) {
       }
     }
   }
-  
-  config.options = Object.assign({
+
+  config = Object.assign({
     selectCondition: random.pick
-  }, config.options);
+  }, config);
   
   let canvasOptions = {
     dimensions: ["width","length"],
@@ -143,7 +143,7 @@ module.exports = function(config) {
     },
     controller: parameterController({
       parameters: config.parameters,
-      conditions: config.options.selectCondition(config.conditions)
+      conditions: config.selectCondition(config.conditions)
     })
   }
 }
