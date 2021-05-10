@@ -243,7 +243,7 @@ module.exports = {
               "*": "Press «Continue» when you are ready at Station " + context.targetStation + ".",
               "control": "Transition to Station " + context.targetStation
             };
-            msg["station" + context.targetStation + ".display"] = "You may take a short break.\n\nPress «Continue» when you're ready to continue the experiment.";
+            msg["station" + context.targetStation + ".display"] = "You may take a short break.\n\nPress «Continue» when you are ready to continue the experiment here.";
             return msg;
           },
         }),  
