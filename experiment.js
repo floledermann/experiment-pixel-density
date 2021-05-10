@@ -314,6 +314,7 @@ module.exports = {
                 minTrials: 2
             })
           },
+          selectCondition: choices => random.shuffle(choices, { loop: true, multiple: 2, preventContinuation: true }),
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
         
