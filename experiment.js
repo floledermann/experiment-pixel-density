@@ -90,7 +90,7 @@ module.exports = {
       }
 
       .current-task-survey-vision .buttons {
-        grid-template-columns: repeat(1, 17em);
+        grid-template-columns: repeat(1, 16em);
       }
       
       .current-task-centerline .buttons,
