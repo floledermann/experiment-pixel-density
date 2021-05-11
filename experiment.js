@@ -252,12 +252,8 @@ module.exports = {
           //rotate: random([-2,+2]), // add random rotation to prevent aliasing
           angle: random.shuffle([0,90,180,270], { loop: true, preventContinuation: true }),
           pixelAlign: false,
-          //lowIntensity: 0, //sequence.loop([0,0.25,0.5,0.75,0.9,0.95]),
-          //highIntensity: 1.0,
-          //contrastRatio: 1.05,
           foregroundIntensity: 0,
           backgroundIntensity: 1,
-          //size: "3px",
           size:
             staircase({
               startValue: "1.163mm",
@@ -318,42 +314,7 @@ module.exports = {
           selectCondition: choices => random.shuffle(choices, { loop: true, multiple: 2, preventContinuation: true }),
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
-/*
-        dashedline({
-          conditions: [
-            {
-              dashpattern: [100,0],
-              foregroundIntensity: 0.5,
-              label: "Solid"
-            },
-            {
-              dashpattern: [1,3],
-              label: "Dotted"
-            },
-            {
-              dashpattern: [3,3],
-              label: "Dashed"
-            },
-            {
-              dashpattern: [3,2,1,2],
-              label: "Dot‑dash"
-            }
-          ],
-          parameters: {
-            angle: random.range(0,360, {round: 1}),
-            length: "50mm",
-            width:
-              staircase({
-                startValue: "1mm",
-                stepSize: 1.2,
-                stepType: "multiply", 
-                minReversals: context => context.minReversals,
-                minTrials: 2
-            })
-          },
-          stimulusDisplay: context => "station" + context.targetStation + ".display"
-        }),
-*/
+
         tao({
           foregroundIntensity: 0,
           backgroundIntensity: 1,
