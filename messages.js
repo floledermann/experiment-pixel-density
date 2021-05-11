@@ -48,7 +48,7 @@ You can try adjusting the height of your chair now.
 Press «Continue» to continue the instructions.`,
 
 start3:
-`Please take the response device with you as you move from station to station. You can slip your hands underneath the black curtain to hold the device in view while viewing each station's screen. You can place your elbows on the desk.
+`Please take the response device with you as you move from station to station. Slip your hands underneath the black curtain to hold the device in view while viewing each station's screen. You may place your elbows on the desk.
 
 This photograph shows the typical pose during the experiment.
 
