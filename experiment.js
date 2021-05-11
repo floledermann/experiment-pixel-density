@@ -291,7 +291,7 @@ module.exports = {
               label: "Solid"
             },
             {
-              dashpattern: [1,1],
+              dashpattern: [1,2],
               label: "Dotted"
             },
             {
