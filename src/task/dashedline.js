@@ -1,6 +1,7 @@
 
 const Dimension = require("another-dimension");
 
+const valOrFunc = require("stimsrv/util/valOrFunc");
 const htmlButtons = require("stimsrv/ui/htmlButtons");
 const parameterController = require("stimsrv/controller/parameterController");
 const random = require("stimsrv/controller/random");
@@ -115,7 +116,13 @@ module.exports = function(config) {
   }
 
   config = Object.assign({
-    selectCondition: random.pick
+    
+    selectCondition: random.pick,
+    
+    stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
+    responseDisplay: "response",
+    monitorDisplay: "monitor",
+
   }, config);
   
   let canvasOptions = {
@@ -128,18 +135,29 @@ module.exports = function(config) {
 
   let renderer = canvasRenderer(renderDashedLine, canvasOptions);
   
+  let responseButtons = htmlButtons(config.conditions.map(c => ({label: c.label, canvas: buttonCanvas, response: c})));
+  
   return {
     name: "dashedline",
     description: "Dashed line", 
-    ui: function(context) {
-      return {
-        interfaces: {
-          display: renderer,
-          response: htmlButtons(config.conditions.map(c => ({label: c.label, canvas: buttonCanvas, response: c}))),
-          monitor: renderer,
-          control: null
-        }
+    ui: function(context) {      
+      let interfaces = {};
+      
+      for (let ui of valOrFunc.array(config.stimulusDisplay, context)) {
+        interfaces[ui] = renderer;
       }
+      
+      for (let ui of valOrFunc.array(config.responseDisplay, context)) {
+        interfaces[ui] = responseButtons;
+      }
+      
+      for (let ui of valOrFunc.array(config.monitorDisplay, context)) {
+        interfaces[ui] = renderer;
+      }
+
+      return {
+        interfaces: interfaces
+      };
     },
     controller: parameterController({
       parameters: config.parameters,

@@ -1,6 +1,7 @@
 
 const Dimension = require("another-dimension");
 
+const valOrFunc = require("stimsrv/util/valOrFunc");
 const htmlButtons = require("stimsrv/ui/htmlButtons");
 const parameterController = require("stimsrv/controller/parameterController");
 
@@ -118,8 +119,14 @@ module.exports = function(parameters, options) {
   }, parameters);
 
   options = Object.assign({
+    
     dimensions: ["size","length"],
-    intensities: ["fillIntensity"]
+    intensities: ["fillIntensity"],
+    
+    stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
+    responseDisplay: "response",
+    monitorDisplay: "monitor",
+    
   }, options);
   
   let buttonParameters = {size: "25arcmin", angle: 0, length: "75arcmin"};
@@ -127,23 +134,34 @@ module.exports = function(parameters, options) {
 
   let renderer = canvasRenderer(renderCenterline, options);
   
+  let responseButtons = htmlButtons([
+    {label: "Triple&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true}},
+    //{label: "Patterned&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
+    //{label: "Gray&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
+    {label: "Cased&nbsp;Line", canvas: buttonCanvas, response: {centerLine: false}}
+  ]);
+  
   return {
     name: "centerline",
     description: "Cased line with (optional) centerline",
     ui: function(context) {
-      return {
-        interfaces: {
-          display: renderer,
-          response: htmlButtons([
-            {label: "Triple&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true}},
-            //{label: "Patterned&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
-            //{label: "Gray&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
-            {label: "Cased&nbsp;Line", canvas: buttonCanvas, response: {centerLine: false}}
-          ]),
-          monitor: renderer,
-          control: null,
-        }
+      let interfaces = {};
+      
+      for (let ui of valOrFunc.array(options.stimulusDisplay, context)) {
+        interfaces[ui] = renderer;
       }
+      
+      for (let ui of valOrFunc.array(options.responseDisplay, context)) {
+        interfaces[ui] = responseButtons;
+      }
+      
+      for (let ui of valOrFunc.array(options.monitorDisplay, context)) {
+        interfaces[ui] = renderer;
+      }
+
+      return {
+        interfaces: interfaces
+      };
     },
     controller: parameterController({parameters: parameters})
   }

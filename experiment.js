@@ -279,7 +279,8 @@ module.exports = {
             stepType: "multiply",
             minReversals: context => context.minReversals,
             minTrials: 2
-          }),
+          }),    
+        }, {
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
         

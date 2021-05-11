@@ -1,6 +1,7 @@
 
 const Dimension = require("another-dimension");
 
+const valOrFunc = require("stimsrv/util/valOrFunc");
 const htmlButtons = require("stimsrv/ui/htmlButtons");
 const parameterController = require("stimsrv/controller/parameterController");
 const random = require("stimsrv/controller/random");
@@ -154,11 +155,17 @@ module.exports = function(config) {
     }
   }
   
-  config.options = Object.assign({
-    selectCondition: random.pick
-  }, config.options);
+  config = Object.assign({
+    
+    selectCondition: random.pick,
+    
+    stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
+    responseDisplay: "response",
+    monitorDisplay: "monitor",
+    
+  }, config);
   
-  config.options.selectCondition = function(sets) {
+  config.selectCondition = function(sets) {
     return function(context) {
       let setKeys = Object.keys(sets);
       let pick = random.pick(setKeys)();
@@ -188,24 +195,34 @@ module.exports = function(config) {
   
   let renderer = canvasRenderer(renderText, canvasOptions);
   
+  let responseButtons = htmlButtons(condition => sets[condition.set][condition.subset].map(t => ({label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + t.toUpperCase() + '</span>', response: {text: t} })));
+  
   return {
     name: "text",
     description: "Text", 
-    ui: function(context) {
-      return {
-        interfaces: {
-          display: renderer,
-          // apply letter-spacing on button to avoid hint by text length
-          // unfortunately CSS applies letter-spacing after the last letter, so we need this hack
-          response: htmlButtons(condition => sets[condition.set][condition.subset].map(t => ({label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + t.toUpperCase() + '</span>', response: {text: t} }))),
-          monitor: renderer,
-          control: null,
-        }
+    ui: function(context) {      
+      let interfaces = {};
+      
+      for (let ui of valOrFunc.array(config.stimulusDisplay, context)) {
+        interfaces[ui] = renderer;
       }
+      
+      for (let ui of valOrFunc.array(config.responseDisplay, context)) {
+        interfaces[ui] = responseButtons;
+      }
+      
+      for (let ui of valOrFunc.array(config.monitorDisplay, context)) {
+        interfaces[ui] = renderer;
+      }
+
+      return {
+        interfaces: interfaces
+      };
+
     },
     controller: parameterController({
       parameters: config.parameters,
-      conditions: config.options.selectCondition(sets)
+      conditions: config.selectCondition(sets)
     }),
     resources: renderer.resources
   }
