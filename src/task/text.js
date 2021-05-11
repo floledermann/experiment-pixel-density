@@ -157,7 +157,7 @@ module.exports = function(config) {
   
   config = Object.assign({
     
-    selectCondition: random.pick,
+    selectCondition: null, // assigned below
     
     stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
     responseDisplay: "response",
