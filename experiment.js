@@ -260,7 +260,7 @@ module.exports = {
           //size: "3px",
           size:
             staircase({
-              startValue: "3mm",
+              startValue: "1.163mm",
               stepSize: 1.2,
               stepType: "multiply", 
               minReversals: context => context.minReversals,
@@ -274,7 +274,7 @@ module.exports = {
           angle: random.range(0,360, {round: 1}),
           length: "50mm",
           size: staircase({
-            startValue: "1.5mm",
+            startValue: "0.868mm",
             stepSize: 1.2,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -308,7 +308,7 @@ module.exports = {
             length: "50mm",
             width:
               staircase({
-                startValue: "1mm",
+                startValue: "0.28mm",
                 stepSize: 1.2,
                 stepType: "multiply", 
                 minReversals: context => context.minReversals,
@@ -358,7 +358,7 @@ module.exports = {
           foregroundIntensity: 0,
           backgroundIntensity: 1,
           size: staircase({
-            startValue: "3mm",
+            startValue: "1.447mm",
             stepSize: 1.2,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -370,7 +370,7 @@ module.exports = {
         tao({
           vanishing: true,
           size: staircase({
-            startValue: "4mm",
+            startValue: "2.315mm",
             stepSize: 1.2,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -390,7 +390,7 @@ module.exports = {
             fontFamily: "Roboto",
             fontSize:
               staircase({
-                startValue: "2.5mm",
+                startValue: "1.708mm",
                 stepSize: 1.1,
                 stepType: "multiply", 
                 minReversals: context => context.minReversals,
