@@ -132,10 +132,12 @@ module.exports = {
       button: htmlButtons([
         "16-25",
         "26-35",
-        "36-50",
-        "51-65",
+        "36-45",
+        "46-55",
+        "56-65",
         "66 or older"
       ]),
+      name: "survey-age",
       store: true
     }),  
 
@@ -150,6 +152,7 @@ module.exports = {
         "Non-binary or other",
         "Would prefer not to answer",
       ]),
+      name: "survey-gender",
       store: true
     }),  
 
@@ -279,7 +282,7 @@ module.exports = {
             stepSize: 1.2,
             stepSizeFine: 1.1,
             numReversalsFine: 3,
-            numDown: 4,
+            numDown: 4,           // because of 3 alternatives
             stepType: "multiply",
             minReversals: context => context.minReversals,
           }),
