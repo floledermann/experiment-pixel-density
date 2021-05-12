@@ -254,27 +254,34 @@ module.exports = {
           pixelAlign: false,
           foregroundIntensity: 0,
           backgroundIntensity: 1,
-          size:
-            staircase({
-              startValue: "1.163mm",
-              stepSize: 1.2,
-              stepType: "multiply", 
-              minReversals: context => context.minReversals,
-              minTrials: 2
+          size: staircase({
+            startValue: "1.163mm",
+            stepSize: 1.2,
+            stepSizeFine: 1.1,
+            numReversalsFine: 3,
+            stepType: "multiply", 
+            minReversals: context => context.minReversals,
           }),
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
 
         centerline({
-          centerLine: random.pick([true,false]),
+          lineCount: random.shuffle([0,3,4], { loop: true, multiple: 2, preventContinuation: true }),
+          lineWidth: 1/7,
           angle: random.range(0,360, {round: 1}),
           length: "50mm",
-          size: staircase({
-            startValue: "0.868mm",
+          fill: false,
+          fillIfNoLine: true,
+          fillIntensity: random.pick([0.45,0.5,0.55]),
+          width: staircase({
+            //startValue: "0.868mm",
+            startValue: "2mm",
             stepSize: 1.2,
+            stepSizeFine: 1.1,
+            numReversalsFine: 3,
+            numDown: 4,
             stepType: "multiply",
             minReversals: context => context.minReversals,
-            minTrials: 2
           }),    
         }, {
           stimulusDisplay: context => "station" + context.targetStation + ".display"
@@ -302,13 +309,13 @@ module.exports = {
           parameters: {
             angle: random.range(0,360, {round: 1}),
             length: "50mm",
-            width:
-              staircase({
-                startValue: "0.28mm",
-                stepSize: 1.2,
-                stepType: "multiply", 
-                minReversals: context => context.minReversals,
-                minTrials: 2
+            width: staircase({
+              startValue: "0.28mm",
+              stepSize: 1.2,
+              stepSizeFine: 1.1,
+              numReversalsFine: 3,
+              stepType: "multiply", 
+              minReversals: context => context.minReversals,
             })
           },
           selectCondition: choices => random.shuffle(choices, { loop: true, multiple: 2, preventContinuation: true }),
@@ -321,9 +328,10 @@ module.exports = {
           size: staircase({
             startValue: "1.447mm",
             stepSize: 1.2,
+            stepSizeFine: 1.1,
+            numReversalsFine: 3,
             stepType: "multiply",
             minReversals: context => context.minReversals,
-            minTrials: 2
           }),
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
@@ -333,9 +341,10 @@ module.exports = {
           size: staircase({
             startValue: "2.315mm",
             stepSize: 1.2,
+            stepSizeFine: 1.1,
+            numReversalsFine: 3,
             stepType: "multiply",
             minReversals: context => context.minReversals,
-            minTrials: 2
           }),
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
@@ -349,13 +358,11 @@ module.exports = {
             outlineIntensity: 1,
             outlineWidth: 0.25,
             fontFamily: "Roboto",
-            fontSize:
-              staircase({
-                startValue: "1.708mm",
-                stepSize: 1.1,
-                stepType: "multiply", 
-                minReversals: context => context.minReversals,
-                minTrials: 2
+            fontSize: staircase({
+              startValue: "1.708mm",
+              stepSize: 1.1,
+              stepType: "multiply", 
+              minReversals: context => context.minReversals,
             })
           },
           fonts: [{
