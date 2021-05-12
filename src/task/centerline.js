@@ -12,10 +12,13 @@ function renderCenterline(ctx, condition) {
   
   condition = Object.assign({
     angle: 0,
-    size: 10,
+    width: 7,
     length: 100,
-    centerLine: true,
-    fillGapIfNoLine: true, // fill gap if no center line is present
+    lineCount: 3,
+    lineWidth: 1/7,
+    fill: false,
+    fillIfNoLine: true, // fill gap if no center line is present
+    fillIfOneLine: true, // fill gap if no center line is present
     fillIntensity: "rgb(128,128,128)",
     pixelAlign: true
     // foregroundIntensity/backgroundIntensity are handled by caller!
@@ -23,13 +26,13 @@ function renderCenterline(ctx, condition) {
   
 /*
   
-  +--------------------------+   -      -    
-  |##########################|   |    size/5 
-  +--------------------------+   |      -    
-                                 |    size/5       
-  +--------------------------+   |      -    
-  |############ X ###########|  size  size/5  (if centerLine == true)     
-  +--------------------------+   |      -
+  +--------------------------+   -       -    
+  |##########################|   |     width*lineWidth 
+  +--------------------------+   |       -    
+                                 |     (width-(lineCount*lineWidth))/(lineCount-1)       
+  +--------------------------+   |       -    
+  |############ X ###########|  width  width*lineWidth 
+  +--------------------------+   |       -
                                  |           
   +--------------------------+   |
   |##########################|   |           
@@ -41,71 +44,77 @@ function renderCenterline(ctx, condition) {
 X ... Origin
 */
   
-  let s = condition.size;
+  let w = condition.width;
+  let lw = w * condition.lineWidth;
   let l = condition.length;
-  let s2 = s/2;
+  let w2 = w/2;
   let l2 = l/2;
   
-  // If s/2 (upper-left corner) lands on a fractional pixel,
+  // If w/2 (upper-left corner) lands on a fractional pixel,
   // align with pixel grid if requested.
   // Do this before rotation to avoid a visible offset between the different angles.
-  if (condition.pixelAlign && s2 != Math.floor(s2)) {
-    let remainder = s2-Math.floor(s2);
+  if (condition.pixelAlign && w2 != Math.floor(w2)) {
+    let remainder = w2-Math.floor(w2);
     ctx.translate(remainder, remainder);
   }
   
   ctx.rotate(condition.angle / 180 * Math.PI);
   
-  if (!condition.centerLine && condition.fillGapIfNoLine) {
+  if (condition.fill 
+      || (condition.lineCount == 0 && condition.fillIfNoLine)
+      || (condition.lineCount == 1 && condition.fillIfOneLine)) {
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(-l2,-3*s/10);
-    ctx.lineTo(l2,-3*s/10);
-    ctx.lineTo(l2,3*s/10);
-    ctx.lineTo(-l2,3*s/10);
+    ctx.moveTo(-l2,-w2);
+    ctx.lineTo(l2,-w2);
+    ctx.lineTo(l2,w2);
+    ctx.lineTo(-l2,w2);
     ctx.closePath();
     ctx.fillStyle = condition.fillIntensity;
     ctx.fill();
     ctx.restore();
   }
-    
-  ctx.beginPath();
-  ctx.moveTo(-l2,-s2);
-  ctx.lineTo(l2,-s2);
-  ctx.lineTo(l2,-s2+s/5);
-  ctx.lineTo(-l2,-s2+s/5);
-  ctx.closePath();
-  ctx.fill();
   
-  if (condition.centerLine) {
+  if (condition.lineCount == 1) {
     ctx.beginPath();
-    ctx.moveTo(-l2,-s/10);
-    ctx.lineTo(l2,-s/10);
-    ctx.lineTo(l2,s/10);
-    ctx.lineTo(-l2,s/10);
+    ctx.moveTo(-l2,-lw/2);
+    ctx.lineTo(l2,-lw/2);
+    ctx.lineTo(l2,lw/2);
+    ctx.lineTo(-l2,lw/2);
     ctx.closePath();
     ctx.fill();
   }
   
-  ctx.beginPath();
-  ctx.moveTo(-l2,s2-s/5);
-  ctx.lineTo(l2,s2-s/5);
-  ctx.lineTo(l2,s2);
-  ctx.lineTo(-l2,s2);
-  ctx.closePath();
+  if (condition.lineCount > 1) {
+    
+    for (let i=0; i<condition.lineCount; i++) {
+      
+      let pos = -w2 + i*((w-lw) / (condition.lineCount - 1));
+      
+      ctx.beginPath();
+      ctx.moveTo(-l2,pos);
+      ctx.lineTo(l2,pos);
+      ctx.lineTo(l2,pos+lw);
+      ctx.lineTo(-l2,pos+lw);
+      ctx.closePath();
+      ctx.fill();
+      
+    }    
+  }
   
-  ctx.fill();
- 
 }}
 
 module.exports = function(parameters, options) {
   
   parameters = Object.assign({
     angle: 0,
-    size: "5mm",
+    width: "5mm",
     length: "30mm",
-    centerLine: true,
-    fillGapIfNoLine: true, // fill gap if no center line is present
+    lineCount: 3,
+    lineWidth: 1/7,
+    fill: false,
+    fillIfNoLine: true, // fill gap if no center line is present
+    fillIfOneLine: true, // fill gap if no center line is present
     backgroundIntensity: 1.0,
     foregroundIntensity: 0.0,
     fillIntensity: 0.5,
@@ -115,12 +124,12 @@ module.exports = function(parameters, options) {
     //fillIntensity: "rgb(212, 212, 212)", // 2/3 @ 2.2gamma
     //fillIntensity: "rgb(202, 202, 202)", // 3/5 @ 2.2gamma
     //fillIntensity: "rgb(168, 168, 168)", // 2/5 @ 2.2gamma
-    pixelAlign: true
+    pixelAlign: false
   }, parameters);
 
   options = Object.assign({
     
-    dimensions: ["size","length"],
+    dimensions: ["width","length"],
     intensities: ["fillIntensity"],
     
     stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
@@ -129,21 +138,23 @@ module.exports = function(parameters, options) {
     
   }, options);
   
-  let buttonParameters = {size: "25arcmin", angle: 0, length: "75arcmin"};
+  let buttonParameters = {width: "25arcmin", angle: 0, length: "75arcmin", fillIntensity: 0.5};
   let buttonCanvas = htmlButtons.buttonCanvas(renderCenterline, buttonParameters, options);
 
   let renderer = canvasRenderer(renderCenterline, options);
   
+  // TODO: define set of conditions/choices to render buttons from, as in some other tasks
+  // Alternative would be to move this entirely to the expeirment level, but how to configure buttonCanvas there?
   let responseButtons = htmlButtons([
-    {label: "Triple&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true}},
-    //{label: "Patterned&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
-    //{label: "Gray&nbsp;Line", canvas: buttonCanvas, response: {centerLine: true, x:"false"}},
-    {label: "Cased&nbsp;Line", canvas: buttonCanvas, response: {centerLine: false}}
+    //{label: "2 Lines", canvas: buttonCanvas, response: {lineCount: 2}},
+    {label: "3 Lines", canvas: buttonCanvas, response: {lineCount: 3}},
+    {label: "4 Lines", canvas: buttonCanvas, response: {lineCount: 4}},
+    {label: "Grey&nbsp;Line", canvas: buttonCanvas, response: {lineCount: 0}}
   ]);
   
   return {
-    name: "centerline",
-    description: "Cased line with (optional) centerline",
+    name: "parallel",
+    description: "Parallel lines",
     ui: function(context) {
       let interfaces = {};
       
