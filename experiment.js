@@ -103,6 +103,7 @@ module.exports = {
         grid-template-columns: repeat(1, 10em);
       }
       .current-task-tao .buttons {
+        margin-top: 4em;
         display: grid;
         grid-template-columns: repeat(2, 6em);
       }
@@ -272,17 +273,16 @@ module.exports = {
           length: "50mm",
           fill: false,
           fillIfNoLine: true,
-          fillIntensity: random.pick([0.45,0.5,0.55]),
+          fillIntensity: random.pick([0.5,0.55,0.6]),
           width: staircase({
-            //startValue: "0.868mm",
-            startValue: "2mm",
+            startValue: "1mm",
             stepSize: 1.2,
             stepSizeFine: 1.1,
             numReversalsFine: 3,
             numDown: 4,
             stepType: "multiply",
             minReversals: context => context.minReversals,
-          }),    
+          }),
         }, {
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
@@ -302,7 +302,7 @@ module.exports = {
               label: "Dashed"
             },
             {
-              dashpattern: [3,1,1,1],
+              dashpattern: [3,2,1,2],
               label: "Dot‑dash"
             }
           ],
@@ -359,7 +359,7 @@ module.exports = {
             outlineWidth: 0.25,
             fontFamily: "Roboto",
             fontSize: staircase({
-              startValue: "1.708mm",
+              startValue: "1.4mm",
               stepSize: 1.1,
               stepType: "multiply", 
               minReversals: context => context.minReversals,
