@@ -43,6 +43,7 @@ module.exports = {
       id: "stationB",
       pixeldensity: 807,
       viewingdistance: 350,
+      gamma: 2.2,
     },
     {
       name: "Station C (LG P-970)",
@@ -58,6 +59,7 @@ module.exports = {
       id: "stationD",
       pixeldensity: 520,
       viewingdistance: 350,
+      gamma: 2.6,
     },
   ],
   
