@@ -32,27 +32,28 @@ How is your visual capability right now?`,
 start1:
 `Thank you! We can now begin the experiment.
 
-In this experiment, we will ask you to perform some tasks at a series of stations, labeled “Station&nbsp;A” to “Station&nbsp;D”. These are located to your right.
+In this experiment, we will ask you to perform some tasks at a series of stations, labeled “Station&nbsp;A” to “Station&nbsp;D”. These are located to your right. You will begin and end the experiment at this monitor, labeled “Main Monitor”.
 
-You will begin and end the experiment at this monitor, labeled “Main Monitor”.
+Please take the response device (mobile phone) with you as you move from station to station. 
 
 Press «Continue» to continue the instructions.
 `,
 
 start2:
-`At each station, please adjust the chair so that your chin rests comfortably on the rail in front of you. Pull the lever on the left hand side of your chair to adjust the height.
-
-You can try adjusting the height of your chair now.
-
-<img src="/static/resource/resources/images/chair-lever.jpg" width="300" height="300">
-Press «Continue» to continue the instructions.`,
-
-start3:
-`Please take the response device with you as you move from station to station. Slip your hands underneath the black curtain to hold the device in view while viewing each station's screen. You may place your elbows on the desk.
+`At each station, place your chin on the rail in front of the station. Slip your hands underneath the black curtain to hold the response device in view, while viewing each station's screen. You may place your elbows on the desk.
 
 This photograph shows the typical pose during the experiment.
 
 <img src="/static/resource/resources/images/pose.jpg" width="300" height="300">
+Press «Continue» to continue the instructions.`,
+
+
+start3:
+`Please adjust the chair so that your chin rests comfortably on the rail in front of the station and your elbows can be placed on the desk. Pull the lever on the left hand side of your chair to adjust the height.
+
+You can try adjusting the height of your chair now.
+
+<img src="/static/resource/resources/images/chair-lever.jpg" width="300" height="300">
 Press «Continue» to continue the instructions.`,
 
 start4:
