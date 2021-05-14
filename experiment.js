@@ -282,7 +282,7 @@ module.exports = {
 
         centerline({
           lineCount: random.shuffle([0,3,4], { loop: true, multiple: 2, preventContinuation: true }),
-          lineWidth: 1/7,
+          lineWidth: 1/9,
           angle: random.range(0,360, {round: 1}),
           length: "50mm",
           fill: false,
