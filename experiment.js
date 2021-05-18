@@ -162,7 +162,7 @@ module.exports = {
         "main.display": messages.survey3_language
       },
       button: htmlButtons([
-        "Englisch",
+        "English",
         "German",
         "Greek",
         "Russian or other cyrillic",
