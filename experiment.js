@@ -272,7 +272,7 @@ module.exports = {
           size: staircase({
             startValue: "1.163mm",
             stepSize: 1.2,
-            stepSizeFine: 1.1,
+            stepSizeFine: Math.sqrt(1.2),
             numReversalsFine: 3,
             stepType: "multiply", 
             minReversals: context => context.minReversals,
@@ -291,7 +291,7 @@ module.exports = {
           width: staircase({
             startValue: "1mm",
             stepSize: 1.2,
-            stepSizeFine: 1.1,
+            stepSizeFine: Math.sqrt(1.2),
             numReversalsFine: 3,
             numDown: 4,           // because of 3 alternatives
             stepType: "multiply",
@@ -326,7 +326,7 @@ module.exports = {
             width: staircase({
               startValue: "0.28mm",
               stepSize: 1.2,
-              stepSizeFine: 1.1,
+              stepSizeFine: Math.sqrt(1.2),
               numReversalsFine: 3,
               stepType: "multiply", 
               minReversals: context => context.minReversals,
@@ -342,7 +342,7 @@ module.exports = {
           size: staircase({
             startValue: "1.447mm",
             stepSize: 1.2,
-            stepSizeFine: 1.1,
+            stepSizeFine: Math.sqrt(1.2),
             numReversalsFine: 3,
             stepType: "multiply",
             minReversals: context => context.minReversals,
@@ -355,7 +355,7 @@ module.exports = {
           size: staircase({
             startValue: "2.315mm",
             stepSize: 1.2,
-            stepSizeFine: 1.1,
+            stepSizeFine: Math.sqrt(1.2),
             numReversalsFine: 3,
             stepType: "multiply",
             minReversals: context => context.minReversals,
