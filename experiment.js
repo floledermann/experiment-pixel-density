@@ -392,7 +392,7 @@ module.exports = {
     pause({
       message: {
         "*": "Please continue the experiment at the Main Monitor.",
-        "main.display": "Thank you for your effort!\n\nAs a final step, please answer a few quick questions about your experience during the experiment.\n\nPress «Continue» when you are ready."
+        "main.display": "Thank you for your effort!\n\nThe experiment was completed successfully.\nThank you for your participation!"
       },
     }),
 
