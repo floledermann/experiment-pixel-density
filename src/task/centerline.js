@@ -8,7 +8,7 @@ const parameterController = require("stimsrv/controller/parameterController");
 const canvasRenderer = require("stimsrv/stimulus/canvas/canvasRenderer");
 
 function renderCenterline(ctx, condition) {
-{
+
   
   condition = Object.assign({
     angle: 0,
@@ -102,7 +102,7 @@ X ... Origin
     }    
   }
   
-}}
+}
 
 module.exports = function(parameters, options) {
   
