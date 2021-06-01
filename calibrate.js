@@ -28,6 +28,11 @@ module.exports = {
     destination: "./data_calibrate"
   }),
   
+  resources: [
+    "resources/sound"
+  ],
+
+  
   tasks: [
 
     snellen({
