@@ -224,7 +224,6 @@ module.exports = {
       
       context: {
         targetStation: random.sequence(["A","B","C","D"]),
-        //targetStation: sequence(["A","B","C","D"]),
         minReversals: 5,
       },
       
@@ -396,8 +395,6 @@ module.exports = {
       },
     }),
 
-    // TODO: questionannaire
-    
     pause({
       message: {
         display: "The experiment was completed successfully.\nThank you for your participation!",
