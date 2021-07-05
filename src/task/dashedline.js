@@ -140,7 +140,7 @@ module.exports = function(config) {
   return {
     name: "dashedline",
     description: "Dashed line", 
-    ui: function(context) {      
+    frontend: function(context) {      
       let interfaces = {};
       
       for (let ui of valOrFunc.array(config.stimulusDisplay, context)) {

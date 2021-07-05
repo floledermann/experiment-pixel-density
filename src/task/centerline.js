@@ -155,7 +155,7 @@ module.exports = function(parameters, options) {
   return {
     name: "parallel",
     description: "Parallel lines",
-    ui: function(context) {
+    frontend: function(context) {
       let interfaces = {};
       
       for (let ui of valOrFunc.array(options.stimulusDisplay, context)) {

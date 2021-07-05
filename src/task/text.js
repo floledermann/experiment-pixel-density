@@ -2,6 +2,7 @@
 const Dimension = require("another-dimension");
 
 const valOrFunc = require("stimsrv/util/valOrFunc");
+const pickProperties = require("stimsrv/util/pickProperties");
 const htmlButtons = require("stimsrv/ui/htmlButtons");
 const parameterController = require("stimsrv/controller/parameterController");
 const random = require("stimsrv/controller/random");
@@ -23,6 +24,9 @@ function renderText(ctx, condition) {
     angle: 0
   }, condition);
   
+  console.log("Rendering: ", condition);
+  //console.trace();
+  
   ctx.rotate(condition.angle / 180 * Math.PI);
    
   ctx.textAlign = "center";
@@ -34,7 +38,7 @@ function renderText(ctx, condition) {
   // (currently, line-height and font-stretch are omitted)
   //ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px/${c.lineHeight} ${c.fontStretch} ${c.fontFamily}`;
   ctx.font = `${c.fontStyle} ${c.fontVariant} ${c.fontWeight} ${c.fontSize}px ${c.fontFamily}`;
-  console.log("Font: " + ctx.font);
+  //console.log("Font: " + ctx.font);
   
   if (condition.outline && condition.outlineWidth > 0) {
     //console.log(condition.outlineWidth * condition.fontSize);
@@ -62,169 +66,170 @@ function renderText(ctx, condition) {
  
 }
 
-module.exports = function(config) {
+const DEFAULTS = {
+  // condition
+  text: "<no text defined>",
+  fontStyle: "normal",
+  fontVariant: "normal",
+  fontWeight: "normal",
+  fontSize: "4mm",
+  // not supported by node-canvas
+  //lineHeight: 1.5,
+  //fontStretch: "normal",
+  fontFamily: "Arial",
+  angle: 0,
+  outline: false,
+  outlineWidth: 0.25, // relative to fontSize
+  outlineIntensity: 0.5,
+  outline2: false,
+  outline2Width: 0.02, // relative to fontSize
+  outline2Intensity: 0.0,
+  backgroundIntensity: 1.0,
+  foregroundIntensity: 0.0,
   
-  config.parameters = Object.assign({
-    text: "<no text defined>",
-    fontStyle: "normal",
-    fontVariant: "normal",
-    fontWeight: "normal",
-    fontSize: "4mm",
-    // not supported by node-canvas
-    //lineHeight: 1.5,
-    //fontStretch: "normal",
-    fontFamily: "Arial",
-    angle: 0,
-    outline: false,
-    outlineWidth: 0.25, // relative to fontSize
-    outlineIntensity: 0.5,
-    outline2: false,
-    outline2Width: 0.02, // relative to fontSize
-    outline2Intensity: 0.0,
-    backgroundIntensity: 1.0,
-    foregroundIntensity: 0.0
-  }, config.parameters);
+  // config
   
-  config.conditions = config.conditions || [
-    {
-      text: "ABC"
-    },
-    {
-      text: "DEF"
-    }
-  ];
-  
-  let sets = {
-    "e-a": [
-      ["Kamao","Kameo","Kemao","Kemeo"],
-      ["andern","endern","andarn","endarn"],
-      ["Rasta","Raste","Resta","Reste"]
-    ],
-    "rn-m-nn": [
-      ["Lernos","Lemos","Lennos","Lenos"],
-      ["Sernato","Semato","Sennato","Senato"],
-      ["Karne","Kame","Kanne","Kane"]
-    ],
-    "ff-ll-fl-lf": [
-      ["Stoffen","Stollen","Stolfen","Stoflen"],
-      ["Saffe","Salle","Salfe","Safle"],
-    ],
-    "l-f": [
-      ["Kofifa","Kofila","Kolifa","Kolila"],
-      ["fokef","fokel","lokef","lokel"],
-    ],
-    "ll-il-li": [
-      ["Deila","Della","Delia"],
-      ["Monail","Monali","Monall"],
-    ],
-    "i-l": [
-      ["Aiganei","Aiganel","Alganei","Alganel"],
-    ],
-    /*
-    "o-c-e": [
-      ["oce","eco","oec","ceo"]
-    ]
-    "C-G-O": [
-    ],
-    "c-o": [
-    ],  
-*/    
-  }
-  
-  for (let set of Object.values(sets)) {
-    for (let subset of set) {
-      subset.sort();  // sort in place
-    }
-  }
-  
-  // add default values explicitly to conditions in order to have each condition fully specified
-  let conditionKeys = new Set();
-  for (let cond of config.conditions) {
-    Object.keys(cond).forEach(k => conditionKeys.add(k));
-  }
-  for (let cond of config.conditions) {
-    for (let key of conditionKeys) {
-      if (!cond.hasOwnProperty(key)) {
-        if (!(typeof config.parameters[key] == "function")) {
-          cond[key] = config.parameters[key];
-        }
-        else {
-          throw new Error("Condition parameter '" + key + "' is not specified for all conditions, but is dynamic - specify this parameter for all conditions!"); 
-        }
-      }
-    }
-  }
+  stimulusDisplay: "display", 
+  responseDisplay: "response",
+  monitorDisplay: "monitor",
+  // fonts
+  // css
+}
+
+let defaults = DEFAULTS;
+
+function array(val) {
+  if (val === undefined || val === null) return [];
+  if (!Array.isArray(val)) return [val];
+  return val;
+}
+
+function taskManager(config) {
   
   config = Object.assign({
-    
-    selectCondition: null, // assigned below
-    
-    stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
-    responseDisplay: "response",
-    monitorDisplay: "monitor",
-    
+    defaults: {},
+    controllerConfig: [],
+    frontendTransformCondition: [],
+    // do we need this? may simply throw an error if it does not resolve to a static value
+    staticOptions: []
   }, config);
   
-  config.selectCondition = function(sets) {
-    return function(context) {
-      let setKeys = Object.keys(sets);
-      let pick = random.pick(setKeys)();
-      return {
-        next: function() {
-          let key = pick.next().value;
-          let index = Math.floor(sets[key].length * Math.random());
-          let text = random.pick(sets[key][index])().next().value;
-          return {
-            done: false,
-            value: {
-              set: key,
-              subset: index,
-              text: text
-            }
-          }
-        }
-      }
-    }
+  config.controllerConfig = [config.defaults, ...array(config.controllerConfig)];
+  config.frontendTransformCondition = array(config.frontendTransformCondition);
+  
+  let params = parameterController({
+    parameters: config.controllerConfig, //Array.prototype.map.call(arguments, p => pickProperties.without(p, staticOptions))
+    nextContext: config.nextContext
+  });
+  
+  function resolve(name, context) {
+    return config.controllerConfig.reduce((val, current) => {
+      if (typeof current == "function") current = current(context);
+      let entry = current[name];
+      if (typeof entry == "function") entry = entry(context);
+      if (entry !== undefined) val = entry;
+      return val;
+    }, null);
   }
   
-  let canvasOptions = {
-    dimensions: ["fontSize"],
-    intensities: ["outlineIntensity","outline2Intensity"],
-    fonts: config.fonts
+  function resolveArray(name, context) {
+    return array(resolve(name, context));
   };
   
-  let renderer = canvasRenderer(renderText, canvasOptions);
-  
-  let responseButtons = htmlButtons(condition => sets[condition.set][condition.subset].map(t => ({label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + t.toUpperCase() + '</span>', response: {text: t} })));
-  
   return {
-    name: "text",
-    description: "Text", 
-    ui: function(context) {      
+    resolve: resolve,
+    resolveArray: resolveArray,
+    resolveResources: function(name, context) {
+      return resolveArray(name, context).map(res => res.resource).filter(r => r);
+    },
+    transformCondition: context => condition => {
+      return config.frontendTransformCondition.reduce((condition, transform) => {
+        if (typeof transform == "function") {
+          transform = transform(context);
+        }
+        if (typeof transform == "function") {
+          transform = transform(condition);
+        }
+        Object.assign(condition, transform);
+        return condition;
+      }, condition);
+    },
+    
+    controller: function(context) {
+      return params(context);
+    },
+    
+    interfaces: function(spec, context) {
+      
       let interfaces = {};
       
-      for (let ui of valOrFunc.array(config.stimulusDisplay, context)) {
-        interfaces[ui] = renderer;
-      }
+      Object.keys(spec).forEach(key => {
+        resolveArray(key, context).forEach(ui => {
+          interfaces[ui] = spec[key];
+        })
+      });
       
-      for (let ui of valOrFunc.array(config.responseDisplay, context)) {
-        interfaces[ui] = responseButtons;
-      }
+      return interfaces;
       
-      for (let ui of valOrFunc.array(config.monitorDisplay, context)) {
-        interfaces[ui] = renderer;
-      }
-
-      return {
-        interfaces: interfaces
-      };
-
-    },
-    controller: parameterController({
-      parameters: config.parameters,
-      conditions: config.selectCondition(sets)
-    }),
-    resources: renderer.resources
+    }
+    
   }
 }
 
+let task = function(controllerConfig, frontendTransformCondition) {
+  
+  let manager = taskManager({
+    defaults: defaults,
+    controllerConfig: controllerConfig,
+    frontendTransformCondition: frontendTransformCondition,
+    // do we need this? may simply throw an error if it does not resolve to a static value
+    staticOptions: ["stimulusDisplay", "responseDisplay", "monitorDisplay", "fonts", "css"]
+  });
+
+  return {
+    name: "text",
+    description: "Text",
+    frontend: function(context) {
+
+      let renderer = canvasRenderer(renderText, {
+        dimensions: ["fontSize"],
+        intensities: ["outlineIntensity","outline2Intensity"],
+        fonts: manager.resolveArray("fonts", context)
+      });
+      
+      let responseButtons = htmlButtons(condition => condition.choices.map(
+          c => ({
+            label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + c.toUpperCase() + '</span>',
+            response: {text: c} 
+          })
+        ),{
+        buttons: condition => condition.choices.map(
+          c => ({
+            label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + c.toUpperCase() + '</span>',
+            response: {text: c} 
+          })
+        ),
+        css: manager.resolve("css", context)       
+      });
+        
+      return {
+        interfaces: manager.interfaces({
+          stimulusDisplay: renderer,  
+          responseDisplay: responseButtons,
+          monitorDisplay: renderer
+        }, context),
+        transformCondition: manager.transformCondition(context)
+      };
+
+    },
+    controller: manager.controller,
+    resources: manager.resolveResources("fonts")
+  }
+}
+
+task.defaults = function(_defaults) {
+  defaults = Object.assign({}, DEFAULTS, _defaults);
+}
+
+
+module.exports = task;

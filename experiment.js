@@ -24,7 +24,6 @@ const messages = require("./messages.js");
 pause.defaults({
   background: "#eeeeff",
   textcolor: "#000000",
-  buttondisplay: "response",
 });
 
 htmlButtons.defaults({
@@ -98,20 +97,11 @@ module.exports = {
         display: grid;
         grid-template-columns: repeat(1, 8em);
       }
-      .current-task-text .buttons {
-        display: grid;
-        grid-template-columns: repeat(1, 10em);
-      }
       .current-task-tao .buttons {
         margin-top: 4em;
         display: grid;
         grid-template-columns: repeat(2, 6em);
       }
-      .current-task-text .buttons button {
-        height: 2.5em;
-        margin: 0.5em;
-      }
-
     }
   `,
   
@@ -224,6 +214,7 @@ module.exports = {
       
       context: {
         targetStation: random.sequence(["A","B","C","D"]),
+        //targetStation: sequence(["A","B","C","D"]),
         minReversals: 5,
       },
       
@@ -263,6 +254,7 @@ module.exports = {
         }),  
 
         snellen({
+          // condition
           //rotate: random([-2,+2]), // add random rotation to prevent aliasing
           angle: random.shuffle([0,90,180,270], { loop: true, preventContinuation: true }),
           pixelAlign: false,
@@ -276,6 +268,7 @@ module.exports = {
             stepType: "multiply", 
             minReversals: context => context.minReversals,
           }),
+          // config (static)
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
 
@@ -362,29 +355,89 @@ module.exports = {
           stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
 
-        text({
-          parameters: {
-            angle: random.range(-60,60, {round: 1}),
-            outline: true,
-            outline2: false,
-            backgroundIntensity: 0.5,
-            outlineIntensity: 1,
-            outlineWidth: 0.25,
-            fontFamily: "Roboto",
-            fontSize: staircase({
-              startValue: "1.4mm",
-              stepSize: 1.1,
-              stepType: "multiply", 
-              minReversals: context => context.minReversals,
-            })
-          },
-          fonts: [{
-            family: "Roboto",
-            resource: resource("font/Roboto-Regular.ttf","resources/font/Roboto-Regular.ttf"),
-          }],
-          stimulusDisplay: context => "station" + context.targetStation + ".display"
-        }),
-
+        text(
+          [
+            // configuration
+            {
+              angle: random.range(-60,60, {round: 1}),
+              outline: true,
+              backgroundIntensity: 0.5,
+              outlineIntensity: 1,
+              outlineWidth: 0.25,
+              fontFamily: "Roboto",
+              fontSize: staircase({
+                startValue: "1.4mm",
+                stepSize: 1.1,
+                stepType: "multiply",
+                minReversals: context => context.minReversals,
+              }),
+              css: `
+                .buttons {
+                  display: grid;
+                  grid-template-columns: repeat(1, 10em);
+                }
+                .buttons button {
+                  height: 2.5em;
+                  margin: 0.5em;
+                }
+              `,
+              fonts: [{
+                family: "Roboto",
+                resource: resource("font/Roboto-Regular.ttf","resources/font/Roboto-Regular.ttf"),
+              }],
+              stimulusDisplay: context => "station" + context.targetStation + ".display"
+            },
+            // dynamic configuration: select word from hierarchical collection
+            context => {
+              
+              // hierarchical set of generators - level 1: confusion category, level 2: set of words, level 3: word
+              let wordCategories = random.loop([
+                // e-a
+                random.loop([
+                  random.loop(["Kamao","Kameo","Kemao","Kemeo"]),
+                  random.loop(["andarn","andern","endarn","endern"]),
+                  random.loop(["Rasta","Raste","Resta","Reste"])
+                ]),
+                // rn-m-nn
+                random.loop([
+                  random.loop(["Lemos","Lennos","Lenos","Lernos"]),
+                  random.loop(["Semato","Senato","Sennato","Sernato"]),
+                  random.loop(["Kame","Kane","Kanne","Karne"])
+                ]),
+                // ff-ll-fl-lf
+                random.loop([
+                  random.loop(["Stoffen","Stoflen","Stolfen","Stollen"]),
+                  random.loop(["Saffe","Safle","Salfe","Salle"]),
+                ]),
+                // l-f
+                random.loop([
+                  random.loop(["Kofifa","Kofila","Kolifa","Kolila"]),
+                  random.loop(["fokef","fokel","lokef","lokel"]),
+                ]),
+                // ll-il-li 
+                random.loop([
+                  random.loop(["Deila","Delia","Della"]),
+                  random.loop(["Monail","Monali","Monall"]),
+                ]),
+                // i-l
+                random.loop([
+                  random.loop(["Aiganei","Aiganel","Alganei","Alganel"]),
+                ]),
+                // o-c-e, C-G-O ?
+              ])(context);
+              
+              
+              return condition => {
+                // get the next category, and from that the next set
+                let set = wordCategories.next().value.next().value;
+                return {
+                  text: set.next().value,
+                  choices: set.items
+                }
+              }
+            }
+          ]
+        )
       ]
     }),
 
