@@ -385,7 +385,7 @@ module.exports = {
                 family: "Roboto",
                 resource: resource("font/Roboto-Regular.ttf","resources/font/Roboto-Regular.ttf"),
               }],
-              stimulusDisplay: context => "station" + context.targetStation + ".display"
+              displayInterface: context => "station" + context.targetStation + ".display"
             },
             // dynamic configuration: select word from hierarchical collection
             context => {

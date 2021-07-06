@@ -89,9 +89,9 @@ const DEFAULTS = {
   
   // config
   
-  stimulusDisplay: "display", 
-  responseDisplay: "response",
-  monitorDisplay: "monitor",
+  displayInterface: "display", 
+  responseInterface: "response",
+  monitorInterface: "monitor",
   // fonts
   // css
 }
@@ -109,31 +109,35 @@ function taskManager(config) {
   config = Object.assign({
     defaults: {},
     controllerConfig: [],
-    frontendTransformCondition: [],
+    transformCondition: [],
     // do we need this? may simply throw an error if it does not resolve to a static value
     staticOptions: []
   }, config);
   
   config.controllerConfig = [config.defaults, ...array(config.controllerConfig)];
-  config.frontendTransformCondition = array(config.frontendTransformCondition);
+  config.transformCondition = array(config.transformCondition);
   
   let params = parameterController({
     parameters: config.controllerConfig, //Array.prototype.map.call(arguments, p => pickProperties.without(p, staticOptions))
     nextContext: config.nextContext
   });
   
-  function resolve(name, context) {
-    return config.controllerConfig.reduce((val, current) => {
+  function resolve(name, context, defaultValue) {
+    let val = config.controllerConfig.reduce((val, current) => {
       if (typeof current == "function") current = current(context);
       let entry = current[name];
       if (typeof entry == "function") entry = entry(context);
       if (entry !== undefined) val = entry;
       return val;
     }, null);
+    
+    if ((val === null || val === undefined) && defaultValue !== undefined) return defaultValue;
+    
+    return val;
   }
   
-  function resolveArray(name, context) {
-    return array(resolve(name, context));
+  function resolveArray(name, context, defaultValue) {
+    return array(resolve(name, context, defaultValue));
   };
   
   return {
@@ -164,7 +168,7 @@ function taskManager(config) {
       let interfaces = {};
       
       Object.keys(spec).forEach(key => {
-        resolveArray(key, context).forEach(ui => {
+        resolveArray(key + "Interface", context, key).forEach(ui => {
           interfaces[ui] = spec[key];
         })
       });
@@ -181,9 +185,9 @@ let task = function(controllerConfig, frontendTransformCondition) {
   let manager = taskManager({
     defaults: defaults,
     controllerConfig: controllerConfig,
-    frontendTransformCondition: frontendTransformCondition,
+    transformCondition: transformCondition,
     // do we need this? may simply throw an error if it does not resolve to a static value
-    staticOptions: ["stimulusDisplay", "responseDisplay", "monitorDisplay", "fonts", "css"]
+    staticOptions: ["stimulusInterface", "responseInterface", "monitorInterface", "fonts", "css"]
   });
 
   return {
@@ -197,12 +201,7 @@ let task = function(controllerConfig, frontendTransformCondition) {
         fonts: manager.resolveArray("fonts", context)
       });
       
-      let responseButtons = htmlButtons(condition => condition.choices.map(
-          c => ({
-            label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + c.toUpperCase() + '</span>',
-            response: {text: c} 
-          })
-        ),{
+      let responseButtons = htmlButtons({
         buttons: condition => condition.choices.map(
           c => ({
             label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + c.toUpperCase() + '</span>',
@@ -214,9 +213,9 @@ let task = function(controllerConfig, frontendTransformCondition) {
         
       return {
         interfaces: manager.interfaces({
-          stimulusDisplay: renderer,  
-          responseDisplay: responseButtons,
-          monitorDisplay: renderer
+          display: renderer,  
+          response: responseButtons,
+          monitor: renderer
         }, context),
         transformCondition: manager.transformCondition(context)
       };
