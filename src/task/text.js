@@ -180,7 +180,84 @@ function taskManager(config) {
   }
 }
 
-let task = function(controllerConfig, frontendTransformCondition) {
+/*
+function simpleTask(config) {
+  config = Object.assign({
+    name: "Unnamed Task",
+    description: "",
+    defaults: {},
+    interfaces: {},
+    nextCondition: null,
+    transformCondition: null,
+    nextContext: null,
+    resources: //?
+    css: //?
+  }, config);
+  
+  let task = function(controllerConfig, transformCondition) {
+    
+    let interfaceOptions = Object.keys(config.interfaces).map(i => i + "Interface");
+    let staticOptions = interfaceOptions.concat(["css"]);
+    
+    let interfaceOptions = Object.fromEntries(Object.entries(config.interfaces).map().
+    
+    let manager = taskManager({
+      defaults: config.defaults,
+      controllerConfig: controllerConfig,
+      transformCondition: transformCondition,
+      // do we need this? may simply throw an error if it does not resolve to a static value
+      staticOptions: staticOptions
+    });
+    
+    return {
+      name: config.name,
+      description: config.description,
+      frontend: function(context) {
+        return {
+          interfaces: manager.interfaces(config.interfaces, context),
+          transformCondition: manager.transformCondition(context)
+        };
+
+      },
+      controller: manager.controller,
+      resources: manager.resolveResources("fonts") //?
+    }
+  }
+  
+  task.defaults = function(_defaults) {
+    config.defaults = Object.assign({}, config.defaults, _defaults);
+  }
+  
+  return task;
+}
+
+let renderer = canvasRenderer(renderText, {
+  dimensions: ["fontSize"],
+  intensities: ["outlineIntensity","outline2Intensity"],
+  fonts: // ?
+});
+
+let task = simpleTask({
+  name: "text",
+  description: "Text",
+  defaults: DEFAULTS,
+  interfaces: {
+    display: renderer,
+    monitor: renderer,
+    response: htmlButtons({
+      buttons: condition => condition.choices.map(
+        c => ({
+          label: '<span style="letter-spacing: 0.4em; margin-right: -0.4em;">' + c.toUpperCase() + '</span>',
+          response: {text: c} 
+        })
+      ),
+      css: manager.resolve("css", context)       
+    }),
+  }
+});
+*/
+
+let task = function(controllerConfig, transformCondition) {
   
   let manager = taskManager({
     defaults: defaults,
