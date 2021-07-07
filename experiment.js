@@ -13,9 +13,9 @@ const filestorage = require("stimsrv/storage/filestorage");
 const resource = require("stimsrv/util/resource");
 const htmlButtons = require("stimsrv/ui/htmlButtons");
 
-const centerline = require("./src/task/centerline.js");   
-const dashedline = require("./src/task/dashedline.js");  
-const text = require("./src/task/text.js");  
+const centerline = require("./src/task/centerline.js");
+const dashedline = require("./src/task/dashedline.js");
+const text = require("./src/task/text.js");
 
 const setup = require("./setup-lab.js");
 
