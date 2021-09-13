@@ -1,6 +1,8 @@
 
-const snellen = require("stimsrv/task/snellen");
+const tumblingE = require("stimsrv/task/tumblingE");
 const tao = require("stimsrv/task/aucklandoptotypes");
+const text = require("stimsrv/task/canvasText");  
+
 const pause = require("stimsrv/task/pause");
 const loop = require("stimsrv/task/loop");
 
@@ -15,7 +17,6 @@ const htmlButtons = require("stimsrv/ui/htmlButtons");
 
 const centerline = require("./src/task/centerline.js");
 const dashedline = require("./src/task/dashedline.js");
-const text = require("./src/task/text.js");
 
 const setup = require("./setup-lab.js");
 
@@ -70,6 +71,10 @@ module.exports = {
       font-size: 1.5em;
     }
     
+    .buttons button .sub-ui {
+      margin-top: 0.4em;
+    }
+    
     .buttons-tao {
       display: grid;
       grid-template-columns: repeat(5, 6em);
@@ -92,21 +97,27 @@ module.exports = {
         grid-template-columns: repeat(1, 16em);
       }
       
-      .current-task-centerline .buttons,
+      .current-task-parallel .buttons,
       .current-task-dashedline .buttons {
         display: grid;
         grid-template-columns: repeat(1, 8em);
       }
+      
       .current-task-tao .buttons {
         margin-top: 4em;
         display: grid;
         grid-template-columns: repeat(2, 6em);
       }
+      
+      .current-task-tao .buttons button .sub-ui {
+        margin-top: 0;
+      }
+
     }
   `,
   
   tasks: [
-
+  
     pause({
       message: {
         "*": "Please start the experiment at the Main Monitor.",
@@ -253,7 +264,7 @@ module.exports = {
           },
         }),  
 
-        snellen({
+        tumblingE({
           // condition
           //rotate: random([-2,+2]), // add random rotation to prevent aliasing
           angle: random.shuffle([0,90,180,270], { loop: true, preventContinuation: true }),
@@ -344,6 +355,9 @@ module.exports = {
         
         tao({
           vanishing: true,
+          backgroundIntensity: 0.5,
+          foregroundIntensity: 0.0,
+          outlineIntensity: 1.0,
           size: staircase({
             startValue: "2.315mm",
             stepSize: 1.2,

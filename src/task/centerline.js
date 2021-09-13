@@ -138,19 +138,29 @@ module.exports = function(parameters, options) {
     
   }, options);
   
-  let buttonParameters = {width: "25arcmin", angle: 0, length: "75arcmin", fillIntensity: 0.5};
-  let buttonCanvas = htmlButtons.buttonCanvas(renderCenterline, buttonParameters, options);
+  let buttonParameters = {width: "25arcmin", angle: 0, length: "160arcmin", fillIntensity: 0.5};
 
   let renderer = canvasRenderer(renderCenterline, options);
   
+  let buttonCanvas = canvasRenderer(renderCenterline, {
+    dimensions: ["width","length"],
+    intensities: ["fillIntensity"],
+    width: 120,
+    height: 40,
+    overrideCondition: buttonParameters
+  });
+
+  
   // TODO: define set of conditions/choices to render buttons from, as in some other tasks
   // Alternative would be to move this entirely to the expeirment level, but how to configure buttonCanvas there?
-  let responseButtons = htmlButtons([
-    //{label: "2 Lines", canvas: buttonCanvas, response: {lineCount: 2}},
-    {label: "3 Lines", canvas: buttonCanvas, response: {lineCount: 3}},
-    {label: "4 Lines", canvas: buttonCanvas, response: {lineCount: 4}},
-    {label: "Grey&nbsp;Line", canvas: buttonCanvas, response: {lineCount: 0}}
-  ]);
+  let responseButtons = htmlButtons({
+    buttons: [
+      //{label: "2 Lines", subUI: buttonCanvas, response: {lineCount: 2}},
+      {label: "3 Lines", subUI: buttonCanvas, response: {lineCount: 3}},
+      {label: "4 Lines", subUI: buttonCanvas, response: {lineCount: 4}},
+      {label: "Grey&nbsp;Line", subUI: buttonCanvas, response: {lineCount: 0}}
+    ]
+  });
   
   return {
     name: "parallel",

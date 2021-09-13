@@ -130,12 +130,20 @@ module.exports = function(config) {
     intensities: ["gapIntensity"]
   };
   
-  let buttonParameters = {width: "7arcmin", angle: 0, length: "75arcmin" };
-  let buttonCanvas = htmlButtons.buttonCanvas(renderDashedLine, buttonParameters, canvasOptions);
+  let buttonParameters = {width: "7arcmin", angle: 0, length: "160arcmin" };
+  let buttonCanvas = canvasRenderer(renderDashedLine, {
+    dimensions: ["width","length"],
+    intensities: ["gapIntensity"],
+    width: 120,
+    height: 40,
+    overrideCondition: buttonParameters
+  });
 
   let renderer = canvasRenderer(renderDashedLine, canvasOptions);
   
-  let responseButtons = htmlButtons(config.conditions.map(c => ({label: c.label, canvas: buttonCanvas, response: c})));
+  let responseButtons = htmlButtons({
+    buttons: config.conditions.map(c => ({label: c.label, subUI: buttonCanvas, response: c}))
+  });
   
   return {
     name: "dashedline",
