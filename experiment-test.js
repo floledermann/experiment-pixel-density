@@ -1,6 +1,8 @@
 
-const snellen = require("stimsrv/task/snellen");
+const tumblingE = require("stimsrv/task/tumblingE");
 const tao = require("stimsrv/task/aucklandoptotypes");
+const text = require("stimsrv/task/text");  
+
 const pause = require("stimsrv/task/pause");
 const loop = require("stimsrv/task/loop");
 
