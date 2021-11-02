@@ -116,9 +116,6 @@ module.exports = function(config) {
   }
 
   config = Object.assign({
-    
-    selectCondition: random.pick,
-    
     stimulusDisplay: "display", // TODO: these three should be a common pattern handled by a helper class
     responseDisplay: "response",
     monitorDisplay: "monitor",
@@ -142,7 +139,7 @@ module.exports = function(config) {
   let renderer = canvasRenderer(renderDashedLine, canvasOptions);
   
   let responseButtons = htmlButtons({
-    buttons: config.conditions.map(c => ({label: c.label, subUI: buttonCanvas, response: c}))
+    buttons: condition => condition.choices.map(c => ({label: c.label, subUI: buttonCanvas, response: c}))
   });
   
   return {
@@ -169,7 +166,7 @@ module.exports = function(config) {
     },
     controller: parameterController({
       parameters: config.parameters,
-      conditions: config.selectCondition(config.conditions)
+      generateCondition: config.generateCondition
     })
   }
 }

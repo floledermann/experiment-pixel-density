@@ -17,11 +17,13 @@ const htmlButtons = require("stimsrv/ui/htmlButtons");
 
 const centerline = require("./src/task/centerline.js");   
 const dashedline = require("./src/task/dashedline.js");  
-const text = require("./src/task/text.js");  
 
 const setup = require("./setup-lab.js");
 
 const messages = require("./messages.js");
+
+const canvasRenderer = require("stimsrv/stimulus/canvas/canvasRenderer");
+
 
 pause.defaults({
   background: "#eeeeff",
@@ -73,11 +75,10 @@ module.exports = {
       font-size: 1.5em;
     }
     
-    .buttons-tao {
-      display: grid;
-      grid-template-columns: repeat(5, 6em);
+    .buttons button .sub-ui {
+      margin-top: 0.4em;
     }
-    
+        
     @media (orientation: portrait) {
       .buttons {
         display: grid;
@@ -95,7 +96,7 @@ module.exports = {
         grid-template-columns: repeat(1, 16em);
       }
       
-      .current-task-centerline .buttons,
+      .current-task-parallel .buttons,
       .current-task-dashedline .buttons {
         display: grid;
         grid-template-columns: repeat(1, 8em);
@@ -109,6 +110,11 @@ module.exports = {
         display: grid;
         grid-template-columns: repeat(2, 6em);
       }
+      
+      .current-task-tao .buttons button .sub-ui {
+        margin-top: 0;
+      }
+
       .current-task-text .buttons button {
         height: 2.5em;
         margin: 0.5em;
@@ -128,82 +134,22 @@ module.exports = {
       
       tasks: [
 
-        snellen({
-          //rotate: random([-2,+2]), // add random rotation to prevent aliasing
-          angle: sequence([0,90,180,270]),
-          pixelAlign: false,
-          foregroundIntensity: 0,
-          backgroundIntensity: 1,
-          size: "5mm",
-        }),
-
-        centerline({
-          lineCount: sequence([3,4,0]),
-          lineWidth: 1/9,
-          angle: -15,
-          length: "50mm",
-          fill: false,
-          fillIfNoLine: true,
-          fillIntensity: random.pick([0.5,0.55,0.6]),
-          width: "3mm",
-        }),
-        
-        dashedline({
-          conditions: [
-            {
-              dashpattern: [100,0],
-              label: "Solid"
-            },
-            {
-              dashpattern: [1,2],
-              label: "Dotted"
-            },
-            {
-              dashpattern: [3,1],
-              label: "Dashed"
-            },
-            {
-              dashpattern: [3,2,1,2],
-              label: "Dot‑dash"
-            }
-          ],
-          parameters: {
-            angle: -15,
-            length: "50mm",
-            width: sequence(["1.5mm","1.5mm","1.5mm","1.5mm"])
-          },
-          selectCondition: choices => sequence(choices),
-        }),
-/*
-        tao({
-          foregroundIntensity: 0,
-          backgroundIntensity: 1,
-          size: "5mm",
-        }),
-        */
-        /*
         tao({
           vanishing: true,
-          size: "5mm",
+          backgroundIntensity: 0.5,
+          foregroundIntensity: 0.0,
+          outlineIntensity: 1.0,
+          size: staircase({
+            startValue: "2.315mm",
+            stepSize: 1.2,
+            stepSizeFine: Math.sqrt(1.2),
+            numReversalsFine: 3,
+            stepType: "multiply",
+            minReversals: context => context.minReversals,
+          }),
+          stimulusDisplay: context => "station" + context.targetStation + ".display"
         }),
-*/
-        text({
-          parameters: {
-            angle: -15,
-            outline: true,
-            outline2: false,
-            backgroundIntensity: 0.5,
-            outlineIntensity: 1,
-            outlineWidth: 0.25,
-            fontFamily: "Roboto",
-            fontSize: "3mm"
-          },
-          fonts: [{
-            family: "Roboto",
-            resource: resource("font/Roboto-Regular.ttf","resources/font/Roboto-Regular.ttf"),
-          }],
-        }),
-
+        
       ]
     }),
 
