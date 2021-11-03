@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "stimsrv": "0.0.8",
+    "stimsrv": "0.0.9",
     "another-dimension": "0.4.9"
   },
   "devDependencies": {
